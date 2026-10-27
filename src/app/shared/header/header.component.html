@@ -1,0 +1,30 @@
+<header class="hdr">
+  <!-- سمت راست (RTL): لوگو -->
+  <a class="brand" (click)="goHome()" tabindex="0" (keydown.enter)="goHome()">
+    <img class="brand__mark" src="assets/images/logo.svg" alt="BorderPass">
+    <span class="brand__word">BORDERPASS<i></i></span>
+  </a>
+
+  <!-- سمت چپ: عملیات -->
+  <div class="actions">
+    <ng-container *ngIf="isSlotsPage$ | async; else homeActions">
+      <button type="button" class="ghost" (click)="goHome()">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        بازگشت
+      </button>
+    </ng-container>
+
+    <ng-template #homeActions>
+      <ng-container *ngIf="auth.user$ | async as user; else guest">
+        <span class="who">{{ user.firstName }} {{ user.lastName }}</span>
+        <button type="button" class="ghost" (click)="logout()">خروج</button>
+      </ng-container>
+      <ng-template #guest>
+        <button type="button" class="login" (click)="login()">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          ورود / ثبت‌نام
+        </button>
+      </ng-template>
+    </ng-template>
+  </div>
+</header>

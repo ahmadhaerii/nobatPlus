@@ -1,0 +1,20 @@
+<section class="home">
+  <div class="intro">
+    <h1>هم وطن گرامی<span class="bang">!</span></h1>
+    <p>
+      این سامانه‌ جهت ساماندهی تردد مرزنشینان گرامی و تسهیل عبور شما از مرز طراحی شده است.
+      از اینکه با نوبت‌گیری و برنامه‌ریزی زمان حضور خود در مرز، ما را در ارائه
+      <span class="hl">خدمات بهتر</span> به شما هموطنان عزیز یاری می‌کنید، صمیمانه سپاسگزاریم.
+    </p>
+  </div>
+
+  <div class="panel">
+    <div class="panel__head">نوع خدمات مورد نظر را انتخاب کنید</div>
+    <div class="panel__body">
+      <button *ngFor="let s of services; trackBy: trackById" type="button" class="service" (click)="open(s.route)">
+        <span class="service__icon"><img src="assets/images/logo.svg" alt=""></span>
+        <span class="service__btn">{{ s.title }}</span>
+      </button>
+    </div>
+  </div>
+</section>

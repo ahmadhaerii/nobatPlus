@@ -1,0 +1,48 @@
+.ftr {
+  position: relative;
+  background: var(--bp-navy-800) url('/assets/images/footer-bg.png') center / cover no-repeat;
+  padding: 2.2rem 2rem 1rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.ftr__grid {
+  display: grid;
+  grid-template-columns: auto 1px auto 1fr;   /* RTL: لینک‌ها | خط | تماس | لوگو */
+  align-items: center;
+  gap: 2rem;
+  max-width: 1500px; margin: 0 auto;
+}
+.links { display: flex; flex-direction: column; gap: .9rem; }
+.link {
+  display: flex; align-items: center; gap: .7rem; color: #fff; font-size: .98rem;
+  svg { color: var(--bp-green-400); flex: none; }
+  &:hover span { color: var(--bp-green-400); }
+}
+.divider { align-self: stretch; background: rgba(255,255,255,.25); }
+.contact { display: flex; flex-direction: column; gap: .9rem; }
+.row {
+  display: flex; align-items: center; gap: .7rem; font-size: .95rem; color: #fff;
+  svg { color: var(--bp-green-400); flex: none; }
+}
+.ltr { direction: ltr; unicode-bidi: embed; }
+
+.logo {
+  justify-self: end;  /* RTL → سمت چپ صفحه */
+  display: flex; flex-direction: column; align-items: center; gap: .15rem;
+  img { height: 92px; }
+  strong { font-size: 1.15rem; direction: ltr; letter-spacing: .02em; }
+  .line { width: 100%; height: 3px; border-radius: 2px; background: var(--bp-green-400); }
+  .dots { display: flex; gap: .4rem; margin-top: .3rem;
+    b { width: 10px; height: 10px; &:nth-child(1){background:#3ba35a} &:nth-child(2){background:#4aa3e0} &:nth-child(3){background:#fff} }
+  }
+}
+.credit {
+  margin-top: 1.2rem; padding-top: .9rem; text-align: center; font-size: .9rem;
+  border-top: 1px solid rgba(255,255,255,.18);
+  a { color: var(--bp-green-400); }
+}
+
+@media (max-width: 800px) {
+  .ftr__grid { grid-template-columns: 1fr; justify-items: start; }
+  .divider { display: none; }
+  .logo { justify-self: center; order: -1; }
+}

@@ -1,0 +1,58 @@
+<div class="backdrop" *ngIf="auth.modalOpen$ | async" (click)="close()">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="login-title" (click)="$event.stopPropagation()">
+    <button type="button" class="x" (click)="close()" aria-label="بستن">×</button>
+
+    <!-- مرحله ۱: شماره همراه -->
+    <form *ngIf="step === 'mobile'" [formGroup]="mobileForm" (ngSubmit)="sendOtp()" novalidate>
+      <h2 id="login-title">ورود / ثبت‌نام</h2>
+      <p class="hint">شماره همراه خود را وارد کنید تا کد تایید برایتان پیامک شود.</p>
+      <label for="mobile">شماره همراه</label>
+      <input id="mobile" type="tel" inputmode="numeric" maxlength="11" dir="ltr" placeholder="09123456789"
+             formControlName="mobile" autocomplete="tel" (input)="normalize(mobileForm.controls.mobile, $event)">
+      <small class="err" *ngIf="mobileForm.controls.mobile.touched && mobileForm.controls.mobile.invalid">
+        شماره همراه باید با ۰۹ شروع شود و ۱۱ رقم باشد.
+      </small>
+      <small class="err" *ngIf="error">{{ error }}</small>
+      <button class="bp-btn" type="submit" [disabled]="loading">{{ loading ? 'در حال ارسال…' : 'دریافت کد تایید' }}</button>
+    </form>
+
+    <!-- مرحله ۲: کد پیامک -->
+    <form *ngIf="step === 'otp'" [formGroup]="otpForm" (ngSubmit)="verifyOtp()" novalidate>
+      <h2 id="login-title">کد تایید</h2>
+      <p class="hint">کد ۵ رقمی ارسال‌شده به <b dir="ltr">{{ mobileForm.controls.mobile.value }}</b> را وارد کنید.</p>
+      <label for="code">کد پیامک</label>
+      <input id="code" class="otp" type="text" inputmode="numeric" maxlength="5" dir="ltr"
+             autocomplete="one-time-code" formControlName="code" (input)="normalize(otpForm.controls.code, $event)">
+      <small class="err" *ngIf="error">{{ error }}</small>
+      <button class="bp-btn" type="submit" [disabled]="loading">{{ loading ? 'در حال بررسی…' : 'تایید کد' }}</button>
+      <div class="row">
+        <button type="button" class="link" (click)="editMobile()">ویرایش شماره</button>
+        <button type="button" class="link" [disabled]="countdown > 0" (click)="resend()">
+          {{ countdown > 0 ? 'ارسال مجدد تا ' + timerText : 'ارسال مجدد کد' }}
+        </button>
+      </div>
+    </form>
+
+    <!-- مرحله ۳: مشخصات (کاربر جدید) -->
+    <form *ngIf="step === 'profile'" [formGroup]="profileForm" (ngSubmit)="register()" novalidate>
+      <h2 id="login-title">تکمیل ثبت‌نام</h2>
+      <p class="hint">برای ادامه، مشخصات خود را وارد کنید.</p>
+
+      <label for="fn">نام</label>
+      <input id="fn" type="text" formControlName="firstName" autocomplete="given-name">
+      <small class="err" *ngIf="profileForm.controls.firstName.touched && profileForm.controls.firstName.invalid">نام را وارد کنید.</small>
+
+      <label for="ln">نام خانوادگی</label>
+      <input id="ln" type="text" formControlName="lastName" autocomplete="family-name">
+      <small class="err" *ngIf="profileForm.controls.lastName.touched && profileForm.controls.lastName.invalid">نام خانوادگی را وارد کنید.</small>
+
+      <label for="nc">کد ملی</label>
+      <input id="nc" type="text" inputmode="numeric" maxlength="10" dir="ltr" formControlName="nationalCode"
+             (input)="normalize(profileForm.controls.nationalCode, $event)">
+      <small class="err" *ngIf="profileForm.controls.nationalCode.touched && profileForm.controls.nationalCode.invalid">کد ملی معتبر نیست.</small>
+
+      <small class="err" *ngIf="error">{{ error }}</small>
+      <button class="bp-btn" type="submit" [disabled]="loading">{{ loading ? 'در حال ثبت…' : 'ثبت‌نام و ورود' }}</button>
+    </form>
+  </section>
+</div>
