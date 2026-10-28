@@ -1,38 +1,84 @@
 <section class="slots">
-
   <div class="title">
-    <h1>داشبورد مرزنشین <span class="name">{{ auth.user?.firstName }} {{ auth.user?.lastName }}</span></h1>
+    <h1>
+      داشبورد
+      <span class="name"
+        >{{ auth.user?.firstName }} {{ auth.user?.lastName }}</span
+      >
+    </h1>
   </div>
 
   <div class="card">
-
     <!-- لیست تاریخ‌ها -->
     <div class="dates">
-      <button type="button" class="nav" (click)="scrollStrip('right')" aria-label="روزهای قبل">
-        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <button
+        type="button"
+        class="nav"
+        (click)="scrollStrip('right')"
+        aria-label="روزهای قبل"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22">
+          <path
+            d="M9 6l6 6-6 6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
 
       <div class="strip" #strip>
-        <button *ngFor="let d of days; trackBy: trackDay" type="button" class="day"
-                [class.full]="!d.hasCapacity" [class.active]="selectedDay?.iso === d.iso"
-                [disabled]="!d.hasCapacity" (click)="selectDay(d)">
+        <button
+          *ngFor="let d of days; trackBy: trackDay"
+          type="button"
+          class="day"
+          [class.full]="!d.hasCapacity"
+          [class.active]="selectedDay?.iso === d.iso"
+          [disabled]="!d.hasCapacity"
+          (click)="selectDay(d)"
+        >
           <span class="day__name">{{ d.weekday }}</span>
           <span class="day__date">{{ d.jalali }}</span>
-          <span class="day__state">{{ d.hasCapacity ? 'دارای ظرفیت' : 'تکمیل ظرفیت' }}</span>
+          <span class="day__state">{{
+            d.hasCapacity ? "دارای ظرفیت" : "تکمیل ظرفیت"
+          }}</span>
         </button>
       </div>
 
-      <button type="button" class="nav" (click)="scrollStrip('left')" aria-label="روزهای بعد">
-        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <button
+        type="button"
+        class="nav"
+        (click)="scrollStrip('left')"
+        aria-label="روزهای بعد"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22">
+          <path
+            d="M15 6l-6 6 6 6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
     </div>
 
     <!-- ساعت‌ها -->
     <div class="hours" role="listbox" aria-label="ساعت‌های موجود">
-      <button *ngFor="let h of hours; trackBy: trackHour" type="button" class="hour" role="option"
-              [class.full]="!h.available" [class.selected]="selectedHour?.hour === h.hour"
-              [attr.aria-selected]="selectedHour?.hour === h.hour"
-              [disabled]="!h.available" (click)="selectHour(h)">
+      <button
+        *ngFor="let h of hours; trackBy: trackHour"
+        type="button"
+        class="hour"
+        role="option"
+        [class.full]="!h.available"
+        [class.selected]="selectedHour?.hour === h.hour"
+        [attr.aria-selected]="selectedHour?.hour === h.hour"
+        [disabled]="!h.available"
+        (click)="selectHour(h)"
+      >
         <b>{{ h.label }}</b>
         <span>{{ h.period }}</span>
       </button>
@@ -40,13 +86,36 @@
 
     <div class="foot">
       <div class="confirm">
-        <button type="button" class="bp-btn big" [disabled]="!selectedHour || submitting" (click)="confirm()">
-          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          {{ submitting ? 'در حال ثبت…' : 'تایید و ادامه دریافت نوبت' }}
+        <button
+          type="button"
+          class="bp-btn big"
+          [disabled]="!selectedHour || submitting"
+          (click)="confirm()"
+        >
+          <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+            <circle
+              cx="12"
+              cy="12"
+              r="10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            />
+            <path
+              d="M7.5 12.5l3 3 6-6.5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          {{ submitting ? "در حال ثبت…" : "تایید و ادامه دریافت نوبت" }}
         </button>
         <p class="ok" *ngIf="trackingCode">
-          نوبت شما برای {{ selectedDay?.weekday }} {{ selectedDay?.jalali }} ساعت {{ selectedHour?.label }} ثبت شد.
-          کد پیگیری: <b dir="ltr">{{ trackingCode }}</b>
+          نوبت شما برای {{ selectedDay?.weekday }}
+          {{ selectedDay?.jalali }} ساعت {{ selectedHour?.label }} ثبت شد. کد
+          پیگیری: <b dir="ltr">{{ trackingCode }}</b>
         </p>
       </div>
 
