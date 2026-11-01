@@ -1,13 +1,15 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, delay, of, tap, throwError } from 'rxjs';
-import { API } from './api.config';
+import { Injectable, inject } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, Observable, delay, of, tap, throwError } from "rxjs";
+import { API } from "./api.config";
 
 export interface UserProfile {
   firstName: string;
   lastName: string;
   nationalCode: string;
   mobile: string;
+  fatherName: string;
+  password: string;
 }
 
 export interface VerifyResult {
@@ -16,9 +18,9 @@ export interface VerifyResult {
   profile?: UserProfile;
 }
 
-const STORAGE_KEY = 'bp_session';
+const STORAGE_KEY = "bp_session";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class AuthService {
   private http = inject(HttpClient);
 
@@ -28,35 +30,72 @@ export class AuthService {
   private modalSubject = new BehaviorSubject<boolean>(false);
   readonly modalOpen$ = this.modalSubject.asObservable();
 
-  get user(): UserProfile | null { return this.userSubject.value; }
-  get isLoggedIn(): boolean { return !!this.user; }
-  get token(): string | null { return this.readSession()?.token ?? null; }
+  get user(): UserProfile | null {
+    return this.userSubject.value;
+  }
+  get isLoggedIn(): boolean {
+    return !!this.user;
+  }
+  get token(): string | null {
+    return this.readSession()?.token ?? null;
+  }
 
-  openLogin(): void { this.modalSubject.next(true); }
-  closeLogin(): void { this.modalSubject.next(false); }
+  openLogin(): void {
+    this.modalSubject.next(true);
+  }
+  closeLogin(): void {
+    this.modalSubject.next(false);
+  }
 
   /** مرحله ۱: ارسال پیامک حاوی کد */
   sendOtp(mobile: string): Observable<void> {
     if (API.useMock) return of(void 0).pipe(delay(600));
-    return this.http.post<void>(`${API.baseUrl}/auth/send-otp`, { mobile });
+    return this.http.post<void>(`${API.baseUrl}/Profile/Register`, {
+      ProfileMobileNo: mobile,
+    });
+  }
+  /** مرحله 4: ارسال پیامک حاوی کد */
+  sendLogin(mobile: string, password: string): Observable<void> {
+    if (API.useMock) return of(void 0).pipe(delay(600));
+    return this.http.post<void>(`${API.baseUrl}/Profile/Login`, {
+      ProfileMobileNo: mobile,
+      Password: password,
+    });
   }
 
   /** مرحله ۲: بررسی کد پیامک؛ اگر کاربر جدید بود isNewUser=true */
   verifyOtp(mobile: string, code: string): Observable<VerifyResult> {
     if (API.useMock) {
-      if (code !== API.mockOtp) return throwError(() => new Error('invalid-otp')).pipe(delay(500));
-      return of<VerifyResult>({ token: 'mock-token', isNewUser: true }).pipe(delay(500));
+      if (code !== API.mockOtp)
+        return throwError(() => new Error("invalid-otp")).pipe(delay(500));
+      return of<VerifyResult>({ token: "mock-token", isNewUser: true }).pipe(
+        delay(500),
+      );
     }
-    return this.http.post<VerifyResult>(`${API.baseUrl}/auth/verify-otp`, { mobile, code });
+    return this.http.post<VerifyResult>(`${API.baseUrl}/Profile/Confirm`, {
+      ProfileMobileNo: mobile,
+      ConfirmCode: code,
+    });
   }
 
   /** کاربر جدید: ثبت نام و ورود */
   register(data: UserProfile, token: string): Observable<UserProfile> {
     const req$: Observable<UserProfile> = API.useMock
       ? of(data).pipe(delay(500))
-      : this.http.post<UserProfile>(`${API.baseUrl}/auth/register`, data, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+      : this.http.post<UserProfile>(
+          `${API.baseUrl}/Profile/SetInfo`,
+          {
+            ProfileMobileNo: data.mobile,
+            Password: data.password,
+            Name: data.firstName,
+            FatherName: data.fatherName,
+            LastName: data.lastName,
+            NationalID: data.nationalCode,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
     return req$.pipe(tap((p) => this.setSession(p, token)));
   }
 
@@ -77,8 +116,10 @@ export class AuthService {
 
   private readSession(): { profile: UserProfile; token: string } | null {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null');
-    } catch { return null; }
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "null");
+    } catch {
+      return null;
+    }
   }
 
   private restore(): UserProfile | null {
