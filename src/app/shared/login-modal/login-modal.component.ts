@@ -72,7 +72,6 @@ export class LoginModalComponent implements OnDestroy {
     this.error = "";
     this.auth.sendOtp(this.mobile).subscribe({
       next: (result: any) => {
-        console.log(result.Profile.Registered);
         this.loading = false;
         this.step = result.Profile.Registered ? "login" : "otp";
         this.startTimer();
@@ -95,6 +94,20 @@ export class LoginModalComponent implements OnDestroy {
       .subscribe({
         next: (result: any) => {
           this.loading = false;
+          localStorage.setItem("isLogin", "true");
+          localStorage.setItem("AccessToken", result.Token.AccessToken);
+          localStorage.setItem("LastName", result.Token.LastName);
+          localStorage.setItem("Name", result.Token.Name);
+          localStorage.setItem("ProfileMobileNo", result.Token.ProfileMobileNo);
+          const profile: UserProfile = {
+            firstName: result.Token.Name,
+            lastName: result.Token.LastName,
+            nationalCode: "",
+            mobile: result.Token.ProfileMobileNo,
+            fatherName: "",
+            password: "",
+          };
+          this.auth.loginExisting(profile, result.Token.AccessToken);
           this.finish();
         },
         error: () => {

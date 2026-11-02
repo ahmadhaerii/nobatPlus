@@ -1,6 +1,8 @@
 import { Component, inject } from "@angular/core";
 import { NgFor } from "@angular/common";
 import { Router } from "@angular/router";
+import { ServiceTypeService } from "src/app/core/serviceType.service";
+import ServiceTypeDM from "src/app/store/dataModels/serviceTypeDM";
 
 @Component({
   selector: "bp-home",
@@ -12,13 +14,18 @@ import { Router } from "@angular/router";
 export class HomeComponent {
   private router = inject(Router);
 
-  /** برای افزودن خدمات جدید، یک آیتم به این آرایه اضافه کنید */
-  services = [
-    { id: "plate-change", title: "دریافت پلاک خودرو", route: "/slots" },
-  ];
+  constructor(private serviceType: ServiceTypeService) {}
+  services: ServiceTypeDM[] = [];
 
-  trackById = (_: number, s: { id: string }) => s.id;
+  ngOnInit(): void {
+    this.getList();
+  }
 
+  async getList() {
+    try {
+      this.services = await this.serviceType.getServices();
+    } catch (error) {}
+  }
   open(route: string): void {
     this.router.navigate([route]);
   }
