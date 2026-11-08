@@ -7,7 +7,9 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { catchError, retry, throwError } from "rxjs";
 import { isDevMode } from "@angular/core";
-import { API } from "../core/api.config";
+import { API } from "../utils/api.config";
+import { AuthService } from "./auth.service";
+import { NiraSnackBarService } from "nira-snack-bar";
 
 @Injectable({
   providedIn: "root",
@@ -17,6 +19,8 @@ export class HttpRequestService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private authService: AuthService,
+    private niraSnackBar: NiraSnackBarService,
   ) {
     if (isDevMode()) {
       this.url = API.baseUrl;
@@ -144,14 +148,13 @@ export class HttpRequestService {
       console.error("An error occurred:", error.error);
     } else if (error.status === 400 || error.status === 403) {
       console.error(error);
-      this.showError(error.error.description_fa);
+      this.showError(error.error.Error.ErrorText_Fa);
     } else if (error.status === 404) {
       console.error(error);
       this.showError("موردی یافت نشد");
     } else if (error.status === 401) {
       this.showError("لطفا دوباره وارد شوید");
-      localStorage.setItem("isLogin", "");
-      localStorage.setItem("authorization", "");
+      this.authService.logout();
       this.router.navigate(["/"]);
     } else {
       this.showError(" خطا در اتصال به سرور ");
@@ -161,6 +164,9 @@ export class HttpRequestService {
   }
 
   showError(message: string) {
-    console.log(message);
+    this.niraSnackBar.show(message, {
+      statusClass: "error",
+      duration: 5000,
+    });
   }
 }

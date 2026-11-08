@@ -1,0 +1,20 @@
+<button
+  (click)="clicked()"
+  [disabled]="disable"
+  [ngClass]="[
+    'button',
+    theme,
+    colorState,
+    size,
+    loading ? 'cursorLoading' : ''
+  ]"
+  [type]="buttonType"
+>
+  <ng-content></ng-content>
+  <core-spinner
+    *ngIf="loading"
+    class="loading"
+    [colorState]="colorState"
+    [size]="20"
+  ></core-spinner>
+</button>

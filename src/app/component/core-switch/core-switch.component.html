@@ -1,0 +1,13 @@
+<div class="switch-container" (click)="change()">
+  <input
+    type="checkbox"
+    class="switch"
+    [checked]="toggle === icon.iconActive"
+  />
+  <div class="switch-color">
+    <span>{{ label }} </span>
+  </div>
+  <label for="switch" class="label"
+    ><span class="material-symbols-outlined">{{ toggle }} </span>
+  </label>
+</div>

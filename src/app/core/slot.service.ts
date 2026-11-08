@@ -1,12 +1,16 @@
 import { Injectable, inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { Observable, delay, of } from "rxjs";
 import { API } from "./api.config";
+import { HttpRequestService } from "../services/http-request.service";
+import { JsonParser } from "../utils/jsonparser";
+import DateListDM from "../store/dataModels/dateListDM";
+import DateDetailDM from "../store/dataModels/dateDetailDM";
 
 export interface DaySlot {
-  iso: string; // 2026-10-27  (برای ارسال به سرور)
-  jalali: string; // 1405-08-05
-  weekday: string; // سه‌شنبه
+  serviceRoleDate: string; // 1405-08-05
+  serviceRoleDateId: string; // 1405-08-05
+  dayOfWeek: string; // سه‌شنبه
   hasCapacity: boolean;
 }
 
@@ -27,6 +31,7 @@ export function periodOf(h: number): string {
 export class SlotService {
   private http = inject(HttpClient);
 
+  constructor(private httpRequest: HttpRequestService) {}
   private jalaliFmt = new Intl.DateTimeFormat("fa-IR-u-ca-persian-nu-latn", {
     year: "numeric",
     month: "2-digit",
@@ -36,46 +41,36 @@ export class SlotService {
     weekday: "long",
   });
 
-  getDays(count = 14): Observable<DaySlot[]> {
-    if (!API.useMock)
-      return this.http.get<DaySlot[]>(`${API.baseUrl}/slots/days`);
-    const days: DaySlot[] = [];
-    const start = new Date();
-    for (let i = 0; i < count; i++) {
-      const d = new Date(
-        start.getFullYear(),
-        start.getMonth(),
-        start.getDate() + i,
-      );
-      const p = Object.fromEntries(
-        this.jalaliFmt.formatToParts(d).map((x) => [x.type, x.value]),
-      );
-      days.push({
-        iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`,
-        jalali: `${p["year"]}-${p["month"]}-${p["day"]}`,
-        weekday: this.weekdayFmt.format(d),
-        hasCapacity: ![2, 3, 4, 6].includes(i % 7), // داده آزمایشی
-      });
-    }
-    return of(days).pipe(delay(300));
+  async getDays(id: string) {
+    const data: any = await this.httpRequest.GET(`/ServiceRole/DateList/` + id);
+    return JsonParser.deserializeArray(data.Dates, DateListDM);
   }
 
-  getHours(iso: string): Observable<HourSlot[]> {
-    if (!API.useMock)
-      return this.http.get<HourSlot[]>(`${API.baseUrl}/slots/hours`, {
-        params: { date: iso },
-      });
-    const seed = iso.split("-").reduce((a, b) => a + Number(b), 0);
-    const hours = Array.from({ length: 12 }, (_, h) => ({
-      hour: h + 6,
-      label: `${String(h + 6).padStart(2, "0")}:00`,
-      period: periodOf(h + 6),
-      available: h + 6 >= 12 || ((h + 6) * 7 + seed) % 3 === 0, // داده آزمایشی
-    }));
-    return of(hours).pipe(delay(200));
+  async getDateDetails(id: string) {
+    const data: any = await this.httpRequest.GET(
+      `/ServiceRole/DateDetails/` + id,
+    );
+
+    console.log(data.DateDetails);
+    return JsonParser.deserializeArray(data.DateDetails, DateDetailDM);
   }
 
-  reserve(iso: string, hour: number): Observable<{ trackingCode: string }> {
+  // getHours(iso: string): Observable<HourSlot[]> {
+  //   if (!API.useMock)
+  //     return this.http.get<HourSlot[]>(`${API.baseUrl}/slots/hours`, {
+  //       params: { date: iso },
+  //     });
+  //   const seed = iso.split("-").reduce((a, b) => a + Number(b), 0);
+  //   const hours = Array.from({ length: 12 }, (_, h) => ({
+  //     hour: h + 6,
+  //     label: `${String(h + 6).padStart(2, "0")}:00`,
+  //     period: periodOf(h + 6),
+  //     available: h + 6 >= 12 || ((h + 6) * 7 + seed) % 3 === 0, // داده آزمایشی
+  //   }));
+  //   return of(hours).pipe(delay(200));
+  // }
+
+  reserve(iso: string, hour: string): Observable<{ trackingCode: string }> {
     if (!API.useMock)
       return this.http.post<{ trackingCode: string }>(
         `${API.baseUrl}/slots/reserve`,

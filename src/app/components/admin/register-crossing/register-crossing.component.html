@@ -1,0 +1,50 @@
+<div class="p-4">
+  <core-card>
+    <div class="p-4 inline-block">
+      <div class="py-4">
+        <b class="text-primary-text-color text-xl me-4">
+          {{ labels.contentCardTitle }}
+        </b>
+      </div>
+
+      <core-date-picker
+        [canSelectToday]="true"
+        [label]="labels.fromDate"
+        class="mx-4 md:w-80 inline-block"
+        [inputFormControl]="myForm.get('formControlFromDate')! | formControl"
+      >
+      </core-date-picker>
+
+      <core-date-picker
+        [canSelectToday]="true"
+        [label]="labels.toDate"
+        class="mx-4 md:w-80 inline-block"
+        [inputFormControl]="myForm.get('formControlToDate')! | formControl"
+      >
+      </core-date-picker>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-6">
+      <core-hour-number
+        class="inline-block"
+        *ngFor="let hour of hoursList"
+        [label]="hour.label"
+        [capacity]="hour.number"
+        [editMode]="false"
+        (changeCapacityEmit)="changeCapacity($event)"
+      >
+      </core-hour-number>
+    </div>
+
+    <div class="grid grid-cols-5 gap-x-2 p-3" dir="ltr">
+      <core-btn
+        [loading]="loading"
+        (click)="add()"
+        class="col-span-1"
+        [colorState]="'success'"
+      >
+        {{ labels.add }}
+      </core-btn>
+    </div>
+  </core-card>
+</div>

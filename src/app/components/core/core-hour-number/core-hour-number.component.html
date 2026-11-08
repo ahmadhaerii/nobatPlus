@@ -1,0 +1,47 @@
+<div class="text-center shadow m-1 border border-black">
+  <p class="font-bold bg-gray-300 p-1 text-gray-600">{{ label }}:00</p>
+  <hr />
+  <div class="border-b border-teal-500 m-2">
+    <input
+      class="text-center appearance-none bg-transparent border-none w-full text-gray-700 leading-tight focus:outline-none"
+      type="number"
+      placeholder="ظرفیت"
+      [(ngModel)]="capacity"
+      (ngModelChange)="onCapacityChange()"
+    />
+  </div>
+  <div *ngIf="editMode">
+    <div class="p-2 flex justify-between">
+      <div class="flex items-baseline">
+        <div
+          class="bg-primary-button-color rounded-full w-3 h-3 shadow-sm"
+        ></div>
+        <span class="pr-1 text-sm">{{ remainingCapacity }}</span>
+      </div>
+      <div class="flex items-baseline">
+        <div class="bg-gray-500 rounded-full w-3 h-3 shadow-sm"></div>
+        <span class="pr-1 text-sm">{{ useCapacity }}</span>
+      </div>
+    </div>
+    <div class="flex py-2 px-1">
+      <core-btn
+        class="pl-1"
+        *ngIf="checkAccess('PQADDMQ')"
+        (btnClicked)="openManualQueueForm()"
+        >مجوز</core-btn
+      >
+
+      <!-- -->
+
+      <core-btn
+        *ngIf="checkAccess('PQADDMQBL')"
+        class="pl-1"
+        (btnClicked)="openManualQueueTcDialog()"
+        >مجوز</core-btn
+      >
+      <core-btn [colorState]="'primary'" (btnClicked)="openQueueListByHour()">
+        لیست نوبت
+      </core-btn>
+    </div>
+  </div>
+</div>

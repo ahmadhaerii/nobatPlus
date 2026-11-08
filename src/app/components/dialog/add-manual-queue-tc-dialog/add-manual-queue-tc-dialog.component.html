@@ -1,0 +1,82 @@
+<core-card class="block w-96 m-5 max-h-[80vh] overflow-auto">
+  <div class="flex justify-between bg-background-color px-3">
+    <b class="m-4 self-center">{{ labels.dialogTitle }}</b>
+    <close-icon (click)="close()" class="hover:cursor-pointer w-6"></close-icon>
+  </div>
+  <div *ngIf="step === 1">
+    <div class="pt-4 pb-2" [formGroup]="myForm">
+      <core-input
+        class="mx-auto block w-80"
+        [inputFormControl]="myForm.get('formControlNationalID')! | formControl"
+        placeholder="کد ملی"
+        type="number"
+      ></core-input>
+    </div>
+    <div class="flex justify-end pb-4 w-full pe-3">
+      <div class="w-[100px] me-2">
+        <core-btn (btnClicked)="close()">{{
+          labels.buttonLabelCancel
+        }}</core-btn>
+      </div>
+      <div class="w-[100px]">
+        <core-btn
+          [isDisabled]="myForm.invalid"
+          (btnClicked)="addManualQueue()"
+          [colorState]="'primary'"
+          [loading]="loading"
+          >{{ labels.dialogTitle }}</core-btn
+        >
+      </div>
+    </div>
+  </div>
+  <!-- ******************** -->
+
+  <div class="pb-2" *ngIf="step === 2">
+    <p class="p-3 text-center text-lg font-bold">نوبت با موفقیت صادر گردید</p>
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>زمان مراجعه:</p>
+      <p class="font-extrabold text-lg text-orange-color">
+        {{ passengerInfo.passingRoleTime }} -
+        {{ passengerInfo.passingRoleDate }}
+      </p>
+    </core-card>
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>سریال نوبت:</p>
+      <p class="font-bold">{{ passengerInfo.userQueueNumber }}</p>
+    </core-card>
+
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>کدملی:</p>
+      <p class="font-bold">{{ passengerInfo.psInfoID }}</p>
+    </core-card>
+
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>نام و نام خانوادگی:</p>
+      <p class="font-bold">
+        {{ passengerInfo.psFirstName }} {{ passengerInfo.psLastName }}
+      </p>
+    </core-card>
+
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>نام پدر:</p>
+      <p class="font-bold">{{ passengerInfo.psFatherName }}</p>
+    </core-card>
+    <div class="flex justify-end pb-4 w-full pe-3">
+      <div class="w-[100px]">
+        <core-btn (btnClicked)="close()">{{
+          labels.buttonLabelClose
+        }}</core-btn>
+      </div>
+    </div>
+  </div>
+</core-card>

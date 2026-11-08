@@ -1,0 +1,30 @@
+<nav class="px-2 flex justify-between items-center bg-dark-blue-color">
+  <img class="w-32" src="../../../../assets/images/borderpass.png" alt="Your Company" />
+  <app-home-icon
+    [routerLink]="links.home.route"
+    class="w-8 block fill-white hover:fill-orange-color cursor-pointer"
+  ></app-home-icon>
+</nav>
+<div class="bg-background-color flex h-screen items-center justify-center">
+  <div class="bg-white flex flex-col rounded-lg shadow-md w-96 h-96 p-6">
+    <span class="mb-3">{{ labels.titleHeader }}</span>
+    <core-input
+      [placeholder]="labels.user"
+      (onChange)="username = $event"
+      [inputFormControl]="loginForm.get('username')! | formControl"
+    ></core-input>
+    <core-input
+      [placeholder]="labels.password"
+      [type]="'password'"
+      (onChange)="password = $event"
+      [inputFormControl]="loginForm.get('password')! | formControl"
+    ></core-input>
+    <p class="text-right text-red-600 text-xs">
+      {{ error }}
+    </p>
+    <core-checkbox class="ms-6" [label]="labels.rememberMe"></core-checkbox>
+    <core-btn class="button mt-6 h-12" [loading]="loading" (btnClicked)="login()">{{
+      labels.submit
+    }}</core-btn>
+  </div>
+</div>
