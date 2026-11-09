@@ -109,11 +109,7 @@
           </svg>
           {{ submitting ? "در حال ثبت…" : "تایید و ادامه دریافت نوبت" }}
         </button>
-        <p class="ok" *ngIf="trackingCode">
-          نوبت شما برای {{ selectedDay?.dayOfWeek }}
-          {{ selectedDay?.serviceRoleDate }} ساعت {{ selectedHour?.title }} ثبت
-          شد. کد پیگیری: <b dir="ltr">{{ trackingCode }}</b>
-        </p>
+        <p class="ok" *ngIf="trackingCode">نوبت برای شما ثبت شد</p>
       </div>
 
       <ul class="legend" aria-label="راهنما">

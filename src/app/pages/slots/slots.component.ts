@@ -12,6 +12,8 @@ import { AppointmentBookingService } from "src/app/core/appointment-booking.serv
 import DateListDM from "src/app/store/dataModels/dateListDM";
 import { ActivatedRoute } from "@angular/router";
 import DateDetailDM from "src/app/store/dataModels/dateDetailDM";
+import { NiraModalService } from "nira-modal";
+import { AppointmentBookingModalComponent } from "src/app/shared/appointment-booking-modal/appointment-booking-modal.component";
 
 @Component({
   selector: "bp-slots",
@@ -42,6 +44,7 @@ export class SlotsComponent implements OnInit, AfterViewInit {
 
   id: string | null = null;
 
+  constructor(private niraModalService: NiraModalService) {}
   ngOnInit() {
     // دریافت مقدار ID از URL
     this.route.paramMap.subscribe(async (params) => {
@@ -99,20 +102,12 @@ export class SlotsComponent implements OnInit, AfterViewInit {
   }
 
   confirm(): void {
-    this.appointmentBooking.openAppointment();
-    if (!this.selectedDay || !this.selectedHour || this.submitting) return;
-    this.submitting = true;
-    this.slotService
-      .reserve(this.selectedDay.serviceRoleDateId, this.selectedHour.hour)
-      .subscribe({
-        next: (r) => {
-          this.trackingCode = r.trackingCode;
-          this.submitting = false;
-        },
-        error: () => {
-          this.submitting = false;
-        },
-      });
+    const modal = this.niraModalService.open(AppointmentBookingModalComponent, {
+      data: {
+        id: this.selectedHour?.serviceRoleHourId,
+      },
+    });
+    modal.afterClosed.subscribe((result) => {});
   }
 
   trackDay = (_: number, d: DaySlot) => d.serviceRoleDateId;

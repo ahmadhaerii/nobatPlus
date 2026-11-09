@@ -1,6 +1,9 @@
 import { AsyncPipe, NgIf } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { Component, inject, Input } from "@angular/core";
 import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { NiraModalConfig } from "nira-modal";
+import { Subject } from "rxjs";
+import { QueueApiService } from "src/app/api/queue-api.service";
 import { AppointmentBookingService } from "src/app/core/appointment-booking.service";
 
 @Component({
@@ -11,30 +14,37 @@ import { AppointmentBookingService } from "src/app/core/appointment-booking.serv
   styleUrls: ["./appointment-booking-modal.component.scss"],
 })
 export class AppointmentBookingModalComponent {
+  @Input() config!: NiraModalConfig;
+  @Input() closeSubject!: Subject<any>;
   loading = false;
   error = "";
-
+  id: string = "";
   private fb = inject(FormBuilder);
   appointmentBooking = inject(AppointmentBookingService);
+  constructor(private queueApiService: QueueApiService) {}
+
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    console.log("AppointmentBookingModalComponent");
+    this.id = this.config.data.id;
   }
-  close(): void {
-    this.appointmentBooking.closeAppointment();
-    this.reset();
+  close() {
+    this.closeSubject.next("true");
   }
   form = this.fb.nonNullable.group({
     chassisNumber: ["", [Validators.required, Validators.minLength(2)]],
     vehiclePlate: ["", [Validators.required, Validators.minLength(2)]],
   });
 
-  private reset(): void {
-    this.error = "";
+  async confirm() {
+    this.loading = true;
+    try {
+      await this.queueApiService.addQueue(
+        this.id,
+        this.form.get("chassisNumber")?.value!,
+        this.form.get("vehiclePlate")?.value!,
+      );
+    } catch (error) {
+      console.error(error);
+    }
     this.loading = false;
-    this.form.reset();
   }
-
-  sendOtp() {}
 }

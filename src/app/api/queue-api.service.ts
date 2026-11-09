@@ -26,6 +26,17 @@ export class QueueApiService {
     return JsonParser.deserializeArray(data.PassingQueues, QueueDM);
   }
 
+  public async addQueue(id: string, chassis: string, carType: string) {
+    const params = {
+      ServiceRoleHourID: id,
+      Items: { Chassis: chassis, CarType: carType },
+    };
+    const data: any = await this.httpRequest.POST(
+      "/ServiceQueue/AddQueue",
+      params,
+    );
+    return data;
+  }
   public async AddManualQueue(
     psMobileNo: string,
     passingRoleHourID: string,

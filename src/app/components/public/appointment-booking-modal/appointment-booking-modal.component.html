@@ -1,8 +1,4 @@
-<div
-  class="backdrop"
-  *ngIf="appointmentBooking.modalOpen$ | async"
-  (click)="close()"
->
+<div class="backdrop" (click)="close()">
   <section
     class="modal"
     role="dialog"
@@ -14,7 +10,7 @@
       ×
     </button>
 
-    <form [formGroup]="form" (ngSubmit)="sendOtp()">
+    <form [formGroup]="form" (ngSubmit)="confirm()">
       <h2 id="login-title">ورود اطلاعات</h2>
       <p class="hint">شماره شاسی و نوع خودرو خود را وارد کنید .</p>
       <label for="mobile">شماره شاسی</label>

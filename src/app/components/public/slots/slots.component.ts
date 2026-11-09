@@ -5,11 +5,17 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { DaySlot, HourSlot, SlotApiService } from "src/app/api/slot-api.service";
+import {
+  DaySlot,
+  HourSlot,
+  SlotApiService,
+} from "src/app/api/slot-api.service";
 import { AppointmentBookingService } from "src/app/services/appointment-booking.service";
 import DateListDM from "src/app/store/dataModels/dateListDM";
 import { ActivatedRoute } from "@angular/router";
 import DateDetailDM from "src/app/store/dataModels/dateDetailDM";
+import { NiraModalService } from "nira-modal";
+import { AppointmentBookingModalComponent } from "../appointment-booking-modal/appointment-booking-modal.component";
 
 @Component({
   selector: "bp-slots",
@@ -24,7 +30,7 @@ export class SlotsComponent implements OnInit, AfterViewInit {
   selectedDay: DateListDM | null = null;
   selectedHour: DateDetailDM | null = null;
   submitting = false;
-  trackingCode = "";
+  trackingCode = false;
 
   // کشیدن با ماوس/لمس
   private dragging = false;
@@ -38,6 +44,7 @@ export class SlotsComponent implements OnInit, AfterViewInit {
     private slotApi: SlotApiService,
     public appointmentBooking: AppointmentBookingService,
     private route: ActivatedRoute,
+    private niraModalService: NiraModalService,
   ) {}
 
   ngOnInit() {
@@ -53,24 +60,18 @@ export class SlotsComponent implements OnInit, AfterViewInit {
   async getList(id: string) {
     try {
       this.days = await this.slotApi.getDays(id);
-      console.log(this.days);
       const first = this.days.find((x) => x.hasCapacity);
-      console.log(first);
       if (first) this.getDateDetails(first);
     } catch (error) {}
   }
 
   async getDateDetails(day: DateListDM) {
-    console.log(this.moved);
-    console.log(!day.hasCapacity);
     try {
       if (!day.hasCapacity || this.moved) return;
       this.selectedDay = day;
-      console.log(this.selectedDay);
       this.selectedHour = null;
-      this.trackingCode = "";
+      this.trackingCode = false;
       this.hours = await this.slotApi.getDateDetails(day.serviceRoleDateId);
-      console.log(this.hours);
     } catch (error) {}
   }
   ngAfterViewInit(): void {
@@ -97,20 +98,14 @@ export class SlotsComponent implements OnInit, AfterViewInit {
   }
 
   confirm(): void {
-    this.appointmentBooking.openAppointment();
-    if (!this.selectedDay || !this.selectedHour || this.submitting) return;
-    this.submitting = true;
-    this.slotApi
-      .reserve(this.selectedDay.serviceRoleDateId, this.selectedHour.hour)
-      .subscribe({
-        next: (r) => {
-          this.trackingCode = r.trackingCode;
-          this.submitting = false;
-        },
-        error: () => {
-          this.submitting = false;
-        },
-      });
+    const modal = this.niraModalService.open(AppointmentBookingModalComponent, {
+      data: {
+        id: this.selectedHour?.serviceRoleHourId,
+      },
+    });
+    modal.afterClosed.subscribe((result) => {
+      this.trackingCode = true;
+    });
   }
 
   trackDay = (_: number, d: DaySlot) => d.serviceRoleDateId;

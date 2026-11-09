@@ -52,8 +52,6 @@ export class SlotApiService {
     const data: any = await this.httpRequest.GET(
       `/ServiceRole/DateDetails/` + id,
     );
-
-    console.log(data.DateDetails);
     return JsonParser.deserializeArray(data.DateDetails, DateDetailDM);
   }
 
