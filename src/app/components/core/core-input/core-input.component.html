@@ -1,0 +1,87 @@
+<div
+  [ngStyle]="{
+    '--container-background': containerBackground,
+    'input-background': inputBackground,
+    '--input-focus-background': inputFocusBackground,
+    '--input-focus-border': inputFocusBorder,
+    '--input-height': inputHeight,
+    '--input-radius': inputRadius,
+    '--input-border': inputBorder,
+    '--input-text-align': inputTextAlign,
+    '--label-top': labelTop,
+    '--label-right': labelRight,
+    '--label-left': labelLeft,
+    '--label-transform': labelTransform,
+    '--label-direction': labelDirection,
+  }"
+  class="customization"
+>
+  <div
+    class="container-input"
+    [ngClass]="{
+      error:
+        (inputFormControl.touched || inputFormControl.dirty) &&
+        inputFormControl.errors,
+    }"
+  >
+    <input
+      [type]="inputType"
+      class="a-input-style"
+      (ngModelChange)="change()"
+      [formControl]="inputFormControl"
+      [ngClass]="{
+        'have-value': inputFormControl.value,
+        'disable-input': isDisable,
+      }"
+    />
+    <label
+      *ngIf="
+        (inputFormControl.value.length === 0 || canShowPlaceHolder) &&
+        placeholder.length > 0
+      "
+      >{{ placeholder }}
+    </label>
+    <div class="label-error overflow-hidden">
+      <span
+        *ngIf="
+          (inputFormControl.touched || inputFormControl.dirty) &&
+          inputFormControl.errors?.['required']
+        "
+        >این فیلد خالی است</span
+      >
+      <span
+        *ngIf="
+          (inputFormControl.touched || inputFormControl.dirty) &&
+          inputFormControl.errors?.['prePayment']
+        "
+        >مبلغ صحیح نیست</span
+      >
+      <span
+        *ngIf="
+          (inputFormControl.touched || inputFormControl.dirty) &&
+          inputFormControl.errors?.['minlength']
+        "
+      >
+        حداقل تعداد کارکتر
+        {{
+          inputFormControl.errors?.["minlength"].requiredLength
+            | persianTextDigits
+        }}
+        عدد باشد
+      </span>
+      <span
+        *ngIf="
+          (inputFormControl.touched || inputFormControl.dirty) &&
+          inputFormControl.errors?.['maxlength']
+        "
+      >
+        حداکثر تعداد کارکتر
+        {{
+          inputFormControl.errors?.["maxlength"].requiredLength
+            | persianTextDigits
+        }}
+        عدد باشد
+      </span>
+    </div>
+  </div>
+</div>

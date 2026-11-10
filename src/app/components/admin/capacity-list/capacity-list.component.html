@@ -1,0 +1,76 @@
+<div class="grid grid-cols-1 p-4">
+  <core-card class="col-span-1 justify-between mt-4">
+    <div class="md:flex justify-between pt-5 px-5">
+      <div class="py-3 md:py-0 md:flex w-60">
+        <core-select
+          [label]="'نوع سرویس'"
+          [inputFormControl]="form.get('serviceTypeFormControl')! | formControl"
+          class="block w-full"
+          [titleKey]="'serviceTitle'"
+          [valueKey]="'serviceTypeId'"
+          [defaultValue]="defaultServiceRole.serviceTypeId"
+          [items]="serviceRoles | async"
+          (onItemSelected)="onServiceTypeSelect($event.serviceTypeId)"
+        ></core-select>
+      </div>
+
+      <div class="grid grid-cols-4 gap-x-2">
+        <core-btn
+          class="col-span-1"
+          filterTable
+          [key]="tableKey"
+          [columnsSchema]="columnsSchema"
+        >
+          <div class="flex">
+            <filter-alt-icon class="h-5 w-5 fill-secondary-text-color">
+            </filter-alt-icon>
+            {{ labels.filterButtonName }}
+          </div>
+        </core-btn>
+        <core-btn class="col-span-1">
+          <button
+            class="flex w-full"
+            printSectionId="print-section"
+            ngxPrint
+            [useExistingCss]="true"
+          >
+            <print-icon class="h-5 w-5 fill-secondary-text-color"> </print-icon>
+            {{ labels.printButtonName }}
+          </button>
+        </core-btn>
+        <core-btn class="col-span-1" (click)="exportExcel()">
+          <div class="flex">
+            <list-alt-icon class="h-5 w-5 fill-secondary-text-color">
+            </list-alt-icon>
+            {{ labels.excelButtonName }}
+          </div> </core-btn
+        ><core-btn
+          class="col-span-1"
+          [theme]="'square'"
+          [colorState]="'primary'"
+          (click)="registerCrossing()"
+          >{{ labels.registerCrossing }}</core-btn
+        >
+      </div>
+    </div>
+    <div class="col-span-1">
+      <core-spinner
+        *ngIf="loading"
+        class="w-full px-3 block"
+        type="line"
+      ></core-spinner>
+      <div id="print-section">
+        <core-table
+          dir="rtl"
+          id="excel-table"
+          [key]="tableKey"
+          [columnsSchema]="columnsSchema"
+          [tableData]="tableData"
+          [loading]="loading"
+          [responsive]="false"
+          (onColumnClicked)="onColumnClicked($event)"
+        ></core-table>
+      </div>
+    </div>
+  </core-card>
+</div>

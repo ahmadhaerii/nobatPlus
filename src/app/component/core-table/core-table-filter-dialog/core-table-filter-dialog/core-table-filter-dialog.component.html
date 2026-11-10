@@ -1,0 +1,24 @@
+<core-card class="block min-w-64 max-h-[80vh] overflow-auto bg-background-card-color">
+  <div class="flex mb-6 justify-between bg-background-color">
+    <b class="m-3 self-center">فیلتر جدول</b>
+    <close-icon
+      (click)="close()"
+      class="h-10 m-3 rounded-full cursor-pointer fill-secondary-text-color p-2 hover:fill-primary-text-color hover:shadow-md hover:bg-background-hover-color"
+    ></close-icon>
+  </div>
+
+  <div *ngFor="let column of columnsSchema">
+    <div>
+      <core-checkbox
+        class="inline-block w-4 ms-4"
+        [checked]="column.active === undefined ? true : column.active"
+        (onChange)="onCheckboxClicked(column, $event)"
+      ></core-checkbox>
+      {{ column.label }}
+    </div>
+  </div>
+
+  <div class="grid grid-cols-3 gap-x-2 p-3" dir="ltr">
+    <core-btn (btnClicked)="submitBtn()" class="col-span-1"> بستن </core-btn>
+  </div>
+</core-card>

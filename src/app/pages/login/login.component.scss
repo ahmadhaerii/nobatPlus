@@ -1,0 +1,10 @@
+.button {
+  ::ng-deep button {
+    height: 38px;
+    background: rgba(59, 131, 246, 0.822);
+    color: white !important;
+    &:focus {
+      background: rgb(59 130 246) !important;
+    }
+  }
+}

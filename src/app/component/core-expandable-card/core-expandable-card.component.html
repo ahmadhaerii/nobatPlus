@@ -1,0 +1,23 @@
+<div class="root">
+  <div class="header" (click)="isCardOpen = !isCardOpen">
+    <div class="title-header justify-between">
+      <b *ngIf="headerTitle.length > 0" class="title-label">
+        {{ headerTitle }}
+      </b>
+      <ng-content *ngIf="headerTitle.length === 0" select="[headerContent]">
+      </ng-content>
+      <arrow-up-icon
+        *ngIf="isCardOpen; else close"
+        class="w-10"
+      ></arrow-up-icon>
+      <ng-template #close>
+        <arrow-down-icon class="w-10"></arrow-down-icon>
+      </ng-template>
+    </div>
+  </div>
+  <div class="body-css-class" *ngIf="isCardOpen">
+    <div class="line"></div>
+
+    <ng-content></ng-content>
+  </div>
+</div>

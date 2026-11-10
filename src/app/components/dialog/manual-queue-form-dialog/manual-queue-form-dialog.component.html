@@ -1,0 +1,170 @@
+<core-card class="block w-96 m-5 max-h-[80vh] overflow-auto">
+  <div class="flex justify-between bg-background-color px-3">
+    <b class="m-4 self-center">{{ labels.dialogTitle }}</b>
+    <close-icon (click)="close()" class="hover:cursor-pointer w-6"></close-icon>
+  </div>
+
+  <div class="pt-4 pb-2" *ngIf="step === 1" [formGroup]="myForm">
+    <core-input
+      class="mx-auto block w-80"
+      [inputFormControl]="myForm.get('formControlNationalID')! | formControl"
+      placeholder="کد ملی"
+      type="number"
+    ></core-input>
+    <core-input
+      class="mx-auto block w-80"
+      [inputFormControl]="myForm.get('formControlName')! | formControl"
+      placeholder="نام"
+      type="text"
+    ></core-input>
+    <core-input
+      class="mx-auto block w-80"
+      [inputFormControl]="myForm.get('formControlLastName')! | formControl"
+      placeholder="نام خانوادگی"
+      type="text"
+    ></core-input>
+    <core-input
+      class="mx-auto block w-80"
+      [inputFormControl]="myForm.get('formControlFatherName')! | formControl"
+      placeholder="نام پدر"
+      type="text"
+    ></core-input>
+    <core-input
+      class="block mx-auto w-80"
+      [inputFormControl]="myForm.get('formControlMobile')! | formControl"
+      placeholder="موبایل"
+      type="number"
+    ></core-input>
+    <!-- <div
+      [ngClass]="{ ' border border-gray-200 rounded-md': companions.length }"
+      class="mx-2 px-2"
+      formArrayName="companions"
+    >
+      <div
+        *ngFor="let companion of companions.controls; let i = index"
+        [formGroupName]="i"
+        class="p-4 rounded-lg"
+      >
+        <div class="flex justify-between items-center mb-2">
+          <h3 class="text-lg font-semibold">همراه {{ i + 1 }}</h3>
+          <button
+            type="button"
+            (click)="removeCompanion(i)"
+            class="text-red-500 hover:text-red-700 text-sm"
+          >
+            حذف همراه
+          </button>
+        </div>
+
+        <div class="flex gap-3 mb-1">
+          <div class="flex-1">
+            <core-input
+              class="block w-full"
+              [inputFormControl]="companion.get('FirstName')! | formControl"
+              placeholder="نام همراه"
+              type="text"
+            ></core-input>
+          </div>
+          <div class="flex-1">
+            <core-input
+              class="block w-full"
+              [inputFormControl]="companion.get('LastName')! | formControl"
+              placeholder="نام خانوادگی همراه"
+              type="text"
+            ></core-input>
+          </div>
+        </div>
+
+        <div class="mb-1">
+          <core-input
+            class="block w-full"
+            [inputFormControl]="companion.get('NationalID')! | formControl"
+            placeholder="کد ملی همراه"
+            type="text"
+          ></core-input>
+        </div>
+
+        <div>
+          <core-select
+            [label]="'نسبت'"
+            [inputFormControl]="
+              companion.get('FamilyRelationship')! | formControl
+            "
+            class="block w-full"
+            [titleKey]="'familyRelationshipTitle'"
+            [valueKey]="'familyRelationshipID'"
+            [defaultValue]="null"
+            [items]="familyRelationshipList | async"
+            (onItemSelected)="
+              companion
+                .get('FamilyRelationship')
+                ?.setValue($event.familyRelationshipID)
+            "
+          ></core-select>
+        </div>
+      </div>
+
+      <button
+        *ngIf="companions.length < 4"
+        type="button"
+        (click)="addCompanion()"
+        class="w-full my-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-200"
+      >
+        + افزودن همراه
+      </button>
+    </div> -->
+
+    <div class="px-4 py-4 mx-auto">
+      <core-btn
+        [loading]="loading"
+        (btnClicked)="addManualQueue()"
+        [isDisabled]="!myForm.valid"
+        colorState="warning"
+      >
+        تایید و صدور مجوز
+      </core-btn>
+    </div>
+  </div>
+
+  <div class="pb-2" *ngIf="step === 2">
+    <p class="p-3 text-center text-lg font-bold">نوبت با موفقیت صادر گردید</p>
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>زمان مراجعه:</p>
+      <p class="font-extrabold text-lg text-orange-color">
+        {{ passengerInfo.passingRoleTime }} -
+        {{ passengerInfo.passingRoleDate }}
+      </p>
+    </core-card>
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>سریال نوبت:</p>
+      <p class="font-bold">{{ passengerInfo.userQueueNumber }}</p>
+    </core-card>
+
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>کدملی:</p>
+      <p class="font-bold">{{ passengerInfo.psInfoID }}</p>
+    </core-card>
+
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>نام و نام خانوادگی:</p>
+      <p class="font-bold">
+        {{ passengerInfo.psFirstName }} {{ passengerInfo.psLastName }}
+      </p>
+    </core-card>
+
+    <core-card
+      [cardClass]="'bg-background-card-color m-4 p-4 flex justify-around '"
+    >
+      <p>نام پدر:</p>
+      <p class="font-bold">{{ passengerInfo.psFatherName }}</p>
+    </core-card>
+  </div>
+</core-card>

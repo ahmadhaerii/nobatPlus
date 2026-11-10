@@ -1,0 +1,31 @@
+<section class="home">
+  <div class="intro">
+    <h2>پنجره شروع خدمات مناطق آزاد</h2>
+    <h2>مراجعه کننده گرامی<span class="bang">!</span></h2>
+    <p>
+      این سامانه به‌منظور ساماندهی ارائه خدمات دولتی و تسهیل نوبت‌گیری مراجعان
+      محترم طراحی شده است. همکاری شما در برنامه‌ریزی زمان حضور، ما را در ارائه
+      خدمات بهتر یاری می‌نماید. با سپاس از همراهی شما
+    </p>
+  </div>
+
+  <div class="panel">
+    <div class="panel__head">
+      <span>خدمات منطقه آزاد ماکو</span>
+      <img class="logo-company" src="assets/images/logo.png" alt="NobatPlus" />
+    </div>
+    <div class="panel__body">
+      <button
+        *ngFor="let service of services"
+        type="button"
+        class="service"
+        (click)="open('slots/' + service.serviceTypeId)"
+      >
+        <span class="service__icon"
+          ><img src="assets/images/logo.png" alt=""
+        /></span>
+        <span class="service__btn">{{ service.serviceTitle }}</span>
+      </button>
+    </div>
+  </div>
+</section>

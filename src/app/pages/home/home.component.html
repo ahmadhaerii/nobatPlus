@@ -12,15 +12,15 @@
     <div class="panel__head">نوع خدمات مورد نظر را انتخاب کنید</div>
     <div class="panel__body">
       <button
-        *ngFor="let s of services; trackBy: trackById"
+        *ngFor="let service of services"
         type="button"
         class="service"
-        (click)="open(s.route)"
+        (click)="open('slots/' + service.serviceTypeId)"
       >
         <span class="service__icon"
           ><img src="assets/images/logo.svg" alt=""
         /></span>
-        <span class="service__btn">{{ s.title }}</span>
+        <span class="service__btn">{{ service.serviceTitle }}</span>
       </button>
     </div>
   </div>

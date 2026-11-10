@@ -1,0 +1,44 @@
+<div class="backdrop" (click)="close()">
+  <section
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="login-title"
+    (click)="$event.stopPropagation()"
+  >
+    <button type="button" class="x" (click)="close()" aria-label="بستن">
+      ×
+    </button>
+
+    <form [formGroup]="form" (ngSubmit)="confirm()">
+      <h2 id="login-title">ورود اطلاعات</h2>
+      <p class="hint">شماره شاسی و نوع خودرو خود را وارد کنید .</p>
+      <label for="mobile">شماره شاسی</label>
+      <input
+        id="mobile"
+        type="tel"
+        inputmode="numeric"
+        maxlength="11"
+        dir="ltr"
+        placeholder=""
+        formControlName="chassisNumber"
+        autocomplete="chassisNu"
+      />
+      <label for="mobile">نوع خودرو</label>
+      <input
+        id="mobile"
+        type="tel"
+        inputmode="numeric"
+        maxlength="11"
+        dir="ltr"
+        placeholder=""
+        formControlName="vehiclePlate"
+        autocomplete="chassisNu"
+      />
+      <small class="err" *ngIf="error">{{ error }}</small>
+      <button class="bp-btn" type="submit" [disabled]="loading">
+        {{ loading ? "در حال ارسال…" : "ثبت اطلاعات" }}
+      </button>
+    </form>
+  </section>
+</div>
