@@ -45,3 +45,4 @@ src/
 - کامپوننت‌های `core-date-picker`، `core-hour-number` و `core-table*` و همچنین پوشه‌ی `components/admin/dashboard` در پروژه هستند ولی هنوز در ماژول declare نشده‌اند
   (وابستگی‌هایی مثل nira-modal، ngx-indexed-db، دیالوگ‌های ادمین و `PermissionsService` هنوز اضافه نشده). هر وقت آماده شدند، به `core.module.ts` / `app.module.ts` و `app-routing.module.ts` اضافه کنید.
 - ساخت کامپوننت جدید: `ng g c components/public/نام` (در Angular 16 به‌صورت پیش‌فرض non-standalone ساخته می‌شود) و بعد اضافه‌کردن به `declarations`.
+  ng build --optimization
