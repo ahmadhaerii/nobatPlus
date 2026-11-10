@@ -57,22 +57,26 @@ const routes: Routes = [
   {
     path: "",
     component: RootComponent,
-    title: "نوبت پلاس",
+    title: "Free Zone Plus",
     children: [
       {
         path: "",
         component: HomeComponent,
-        title: "نوبت پلاس",
+        title: "Free Zone Plus",
       },
       {
         path: Links.slots.name + "/:id",
         component: SlotsComponent,
         canActivate: [UserAuthGuard],
-        title: "نوبت پلاس",
+        title: "Free Zone Plus",
       },
     ],
   },
-  { path: Links.login.name, component: LoginComponent, title: "نوبت پلاس" },
+  {
+    path: Links.login.name,
+    component: LoginComponent,
+    title: "Free Zone Plus",
+  },
 
   { path: "**", redirectTo: "" },
 ];

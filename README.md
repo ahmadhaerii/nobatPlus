@@ -1,4 +1,4 @@
-# BorderPass / نوبت پلاس (Angular 16.1)
+# BorderPass / Free Zone Plus (Angular 16.1)
 
 ساختار پروژه مطابق BorderPassenger است: کامپوننت‌ها **standalone نیستند** و همه در `AppModule` (و آرایه‌های `core.module.ts` و `icons.module.ts`) declare می‌شوند.
 
