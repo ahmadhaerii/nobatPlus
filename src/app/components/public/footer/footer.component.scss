@@ -1,13 +1,68 @@
+/* ───────── رنگ‌ها (فقط در همین فایل) ───────── */
+$bg-from: #eceef0;
+$bg-mid: #dfe3e1;
+$bg-to: #cfe6d6;
+$wave-white: rgba(255, 255, 255, 0.35);
+$wave-gray: rgba(156, 163, 175, 0.35);
+$wave-green: rgba(47, 158, 79, 0.28);
+$border-top: #d1d5db;
+
+$text: #374151;
+$text-strong: #111827;
+$icon: #237a3c; /* سبز تیره */
+$accent: #2f9e4f; /* سبز لوگو */
+$link: #237a3c;
+$divider: #9ca3af;
+$credit-line: #9ca3af;
+$dot-1: #2f9e4f;
+$dot-2: #6b7280;
+$dot-3: #d1d5db;
+$badge-bg: #ffffff;
+$badge-border: #e5e7eb;
+$badge-shadow: rgba(0, 0, 0, 0.12);
+
 .ftr {
   position: relative;
-  background: var(--bp-navy-800) url("/assets/images/footer-bg.png") center /
-    cover no-repeat;
+  overflow: hidden;
+  color: $text;
+  background:
+    radial-gradient(ellipse 80% 45% at 25% 115%, $wave-gray, transparent 70%),
+    linear-gradient(135deg, $bg-from, $bg-mid 60%, $bg-to);
   padding: 2.2rem 2rem 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid $border-top;
+}
+.ftr::before {
+  /* موج سفید */
+  content: "";
+  position: absolute;
+  left: -10%;
+  bottom: -190px;
+  width: 120%;
+  height: 280px;
+  border-radius: 50%;
+  background: $wave-white;
+  pointer-events: none;
+}
+.ftr::after {
+  /* موج سبز گوشه */
+  content: "";
+  position: absolute;
+  right: -180px;
+  bottom: -300px;
+  width: 760px;
+  height: 520px;
+  border-radius: 50%;
+  background: $wave-green;
+  pointer-events: none;
+}
+.ftr__grid,
+.credit {
+  position: relative;
+  z-index: 1;
 }
 .ftr__grid {
   display: grid;
-  grid-template-columns: auto 1px auto 1fr; /* RTL: لینک‌ها | خط | تماس | لوگو */
+  grid-template-columns: auto 1px auto 1fr auto; /* RTL: لینک‌ها | خط | تماس | اینماد | لوگو */
   align-items: center;
   gap: 2rem;
   max-width: 1500px;
@@ -22,20 +77,20 @@
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  color: #fff;
+  color: $text;
   font-size: 0.98rem;
   cursor: pointer;
   svg {
-    color: var(--bp-green-400);
+    color: $icon;
     flex: none;
   }
   &:hover span {
-    color: var(--bp-green-400);
+    color: $link;
   }
 }
 .divider {
   align-self: stretch;
-  background: rgba(255, 255, 255, 0.25);
+  background: $divider;
 }
 .contact {
   display: flex;
@@ -47,15 +102,38 @@
   align-items: center;
   gap: 0.7rem;
   font-size: 0.95rem;
-  color: #fff;
+  color: $text;
   svg {
-    color: var(--bp-green-400);
+    color: $icon;
     flex: none;
   }
 }
 .ltr {
   direction: ltr;
   unicode-bidi: embed;
+}
+
+.enamad {
+  justify-self: end; /* کنار لوگو، سمت چپ */
+  a {
+    display: block;
+    line-height: 0;
+    padding: 8px;
+    border-radius: 14px;
+    background: $badge-bg;
+    border: 1px solid $badge-border;
+    box-shadow: 0 2px 8px $badge-shadow;
+    transition: transform 0.2s;
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  img {
+    display: block;
+    height: 92px;
+    width: auto;
+    cursor: pointer;
+  }
 }
 
 .logo {
@@ -66,20 +144,22 @@
   gap: 0.15rem;
   img {
     height: 92px;
-    background: white;
+    background: #fff;
     border-radius: 50%;
     padding: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   }
   strong {
     font-size: 1.15rem;
     direction: ltr;
     letter-spacing: 0.02em;
+    color: $text-strong;
   }
   .line {
     width: 100%;
     height: 3px;
     border-radius: 2px;
-    background: var(--bp-green-400);
+    background: $accent;
   }
   .dots {
     display: flex;
@@ -89,13 +169,13 @@
       width: 10px;
       height: 10px;
       &:nth-child(1) {
-        background: #3ba35a;
+        background: $dot-1;
       }
       &:nth-child(2) {
-        background: #4aa3e0;
+        background: $dot-2;
       }
       &:nth-child(3) {
-        background: #fff;
+        background: $dot-3;
       }
     }
   }
@@ -105,9 +185,11 @@
   padding-top: 0.9rem;
   text-align: center;
   font-size: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  color: $text;
+  border-top: 1px solid $credit-line;
   a {
-    color: var(--bp-green-400);
+    color: $link;
+    font-weight: 700;
   }
 }
 
@@ -122,5 +204,8 @@
   .logo {
     justify-self: center;
     order: -1;
+  }
+  .enamad {
+    justify-self: center;
   }
 }

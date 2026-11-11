@@ -1,65 +1,67 @@
 enum routeNames {
-  adminTurnInquiry = 'turnInquiry',
-  capacityList = 'capacity-list',
-  capacityManagement = 'capacity-management',
-  crossingList = 'crossing-list',
-  dashboard = 'dashboard',
-  dashboardHome = 'dashboard-home',
-  help = 'help',
-  home = 'home',
-  lastAddedQueueList = 'last-added-queue-list',
-  login = 'login',
-  manualQueueList = 'manual-queue-list',
-  queueListByDate = 'queue-list-by-date',
-  registerCrossing = 'register-crossing',
-  slots = 'slots',
-  timeSelect = 'time-select',
-  userLogin = 'user-login',
+  adminTurnInquiry = "turnInquiry",
+  capacityList = "capacity-list",
+  capacityManagement = "capacity-management",
+  crossingList = "crossing-list",
+  dashboard = "dashboard",
+  dashboardHome = "dashboard-home",
+  help = "help",
+  home = "home",
+  lastAddedQueueList = "last-added-queue-list",
+  login = "login",
+  manualQueueList = "manual-queue-list",
+  queueListByDate = "queue-list-by-date",
+  registerCrossing = "register-crossing",
+  slots = "slots",
+  timeSelect = "time-select",
+  userLogin = "user-login",
 
-  bzHome = 'bz-home',
-  rzHome = 'rz-home',
-  tcDashboard = 'tc-dashboard',
+  bzHome = "bz-home",
+  rzHome = "rz-home",
+  tcDashboard = "tc-dashboard",
+  paymentResult = "payment-result",
 }
 
 export enum routeLinks {
-  adminTurnInquiry = '/' +
+  adminTurnInquiry = "/" +
     routeNames.dashboard +
-    '/' +
+    "/" +
     routeNames.adminTurnInquiry,
-  capacityList = '/' + routeNames.dashboard + '/' + routeNames.capacityList,
-  capacityManagement = '/' +
+  capacityList = "/" + routeNames.dashboard + "/" + routeNames.capacityList,
+  capacityManagement = "/" +
     routeNames.dashboard +
-    '/' +
+    "/" +
     routeNames.capacityManagement,
-  crossingList = '/' + routeNames.dashboard + '/' + routeNames.crossingList,
-  dashboard = '/' + routeNames.dashboard,
-  dashboardHome = '/' + routeNames.dashboard + '/' + routeNames.dashboardHome,
-  help = '/' + routeNames.help,
-  home = '/',
-  login = '/' + routeNames.login,
-  lastAddedQueueList = '/' +
+  crossingList = "/" + routeNames.dashboard + "/" + routeNames.crossingList,
+  dashboard = "/" + routeNames.dashboard,
+  dashboardHome = "/" + routeNames.dashboard + "/" + routeNames.dashboardHome,
+  help = "/" + routeNames.help,
+  home = "/",
+  login = "/" + routeNames.login,
+  lastAddedQueueList = "/" +
     routeNames.dashboard +
-    '/' +
+    "/" +
     routeNames.lastAddedQueueList,
-  manualQueueList = '/' +
+  manualQueueList = "/" +
     routeNames.dashboard +
-    '/' +
+    "/" +
     routeNames.manualQueueList,
-  queueListByDate = '/' +
+  queueListByDate = "/" +
     routeNames.dashboard +
-    '/' +
+    "/" +
     routeNames.queueListByDate,
-  registerCrossing = '/' +
+  registerCrossing = "/" +
     routeNames.dashboard +
-    '/' +
+    "/" +
     routeNames.registerCrossing,
-  slots = '/' + routeNames.slots,
-  timeSelect = '/' + routeNames.timeSelect,
-  userLogin = '/' + routeNames.userLogin,
+  slots = "/" + routeNames.slots,
+  timeSelect = "/" + routeNames.timeSelect,
+  userLogin = "/" + routeNames.userLogin,
 
-  bzHome = '/' + routeNames.bzHome,
-  rzHome = '/' + routeNames.rzHome,
-  tcDashboard = '/' + routeNames.tcDashboard,
+  bzHome = "/" + routeNames.bzHome,
+  rzHome = "/" + routeNames.rzHome,
+  tcDashboard = "/" + routeNames.tcDashboard,
+  paymentResult = "/" + routeNames.paymentResult,
 }
 
 export const Links = {
@@ -134,5 +136,9 @@ export const Links = {
   tcDashboard: {
     name: routeNames.tcDashboard,
     route: routeLinks.tcDashboard,
+  },
+  paymentResult: {
+    name: routeNames.paymentResult,
+    route: routeLinks.paymentResult,
   },
 };
