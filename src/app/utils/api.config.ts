@@ -3,7 +3,7 @@
  * useMock = false → درخواست‌ها به baseUrl ارسال می‌شود
  */
 export const API = {
-  baseUrl: "http://turn.borderpark.ir/api",
+  baseUrl: "../api",
   useMock: false,
   mockOtp: "12345",
 };
