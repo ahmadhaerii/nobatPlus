@@ -1,0 +1,230 @@
+<div class="min-h-screen bg-[#1A2238] px-4 py-8 sm:px-6" dir="rtl">
+  <core-spinner
+    *ngIf="loading; else showResult"
+    class="w-full p-3 block"
+    type="line"
+  ></core-spinner>
+  <ng-template #showResult>
+    <div
+      class="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-2xl items-center justify-center"
+    >
+      <!-- ================= SUCCESS ================= -->
+      <div
+        *ngIf="paymentResult && !errorMessage"
+        class="w-full overflow-hidden rounded-2xl bg-white shadow-2xl"
+      >
+        <!-- Header -->
+        <div class="bg-[#E8571A] px-6 py-8 text-center text-white sm:px-10">
+          <!-- Success Icon -->
+          <div
+            class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20"
+          >
+            <svg
+              class="h-9 w-9"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
+
+          <h1 class="text-xl font-bold sm:text-2xl">
+            پرداخت با موفقیت انجام شد
+          </h1>
+        </div>
+
+        <!-- Body -->
+        <div class="p-5 sm:p-8">
+          <div class="mb-5">
+            <h2 class="text-base font-bold text-[#1A2238]">اطلاعات درخواست</h2>
+
+            <div class="mt-2 h-1 w-[120px] rounded-full bg-[#E8571A]"></div>
+          </div>
+
+          <!-- Information -->
+          <div class="space-y-3">
+            <div
+              class="flex items-center justify-between gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4"
+            >
+              <span class="shrink-0 text-sm text-slate-500"> شماره نوبت </span>
+
+              <span
+                class="break-all text-left text-sm font-bold text-[#1A2238]"
+              >
+                {{ paymentResult.userQueueNumber }}
+              </span>
+            </div>
+
+            <div
+              class="flex items-center justify-between gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4"
+            >
+              <span class="shrink-0 text-sm text-slate-500"> موبایل </span>
+
+              <span
+                class="break-all text-left text-sm font-bold text-[#1A2238]"
+              >
+                {{ paymentResult.mobileNo }}
+              </span>
+            </div>
+
+            <!-- Passing Count -->
+            <div
+              *ngFor="let item of paymentResult.items"
+              class="flex items-center justify-between gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4"
+            >
+              <span class="text-sm text-slate-500">
+                {{ item.serviceTitle }}
+              </span>
+
+              <span class="text-sm font-bold text-[#1A2238]">
+                {{ item.value }}
+              </span>
+            </div>
+
+            <!-- Passing Count -->
+            <div
+              class="flex items-center justify-between gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4"
+            >
+              <span class="text-sm text-slate-500"> مبلغ </span>
+
+              <span class="text-sm font-bold text-[#1A2238]">
+                {{ paymentResult.amount }}
+              </span>
+            </div>
+
+            <!-- Tracking Code -->
+            <div
+              class="flex items-center justify-between gap-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4"
+            >
+              <span class="shrink-0 text-sm text-slate-500"> کد پیگیری </span>
+
+              <span
+                class="break-all text-left text-sm font-bold text-[#1A2238]"
+              >
+                {{ paymentResult.pgReference }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="my-6 border-t border-slate-100"></div>
+
+          <!-- Back Button -->
+          <button
+            type="button"
+            (click)="goToHome()"
+            class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#E8571A] px-5 py-3.5 text-sm font-bold text-white shadow-md transition-all duration-200 hover:bg-[#d94d14] hover:shadow-lg active:scale-[0.99]"
+          >
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+
+            بازگشت به صفحه اصلی
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= ERROR ================= -->
+      <div
+        *ngIf="errorMessage"
+        class="w-full overflow-hidden rounded-2xl bg-white shadow-2xl"
+      >
+        <!-- Error Header -->
+        <div class="bg-[#1A2238] px-6 py-8 text-center sm:px-10">
+          <!-- Error Icon -->
+          <div
+            class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/15"
+          >
+            <svg
+              class="h-9 w-9 text-red-500"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+
+          <h1 class="text-xl font-bold text-white sm:text-2xl">
+            پرداخت ناموفق بود
+          </h1>
+
+          <p class="mt-2 text-sm text-slate-300">
+            در انجام عملیات پرداخت مشکلی پیش آمده است.
+          </p>
+        </div>
+
+        <!-- Error Body -->
+        <div class="p-5 sm:p-8">
+          <div class="rounded-xl border border-red-100 bg-red-50 px-5 py-4">
+            <div class="mb-2 flex items-center gap-2">
+              <svg
+                class="h-5 w-5 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 9v4m0 4h.01M10.29 3.86l-7.82 14a2 2 0 001.74 3h15.58a2 2 0 001.74-3l-7.82-14a2 2 0 00-3.48 0z"
+                />
+              </svg>
+
+              <span class="text-sm font-bold text-red-700"> پیام خطا </span>
+            </div>
+
+            <p class="text-sm leading-7 text-red-600">
+              {{ errorMessage }}
+            </p>
+          </div>
+
+          <!-- Back Button -->
+          <button
+            type="button"
+            (click)="goToHome()"
+            class="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#E8571A] px-5 py-3.5 text-sm font-bold text-white shadow-md transition-all duration-200 hover:bg-[#d94d14] hover:shadow-lg active:scale-[0.99]"
+          >
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+
+            بازگشت به صفحه اصلی
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

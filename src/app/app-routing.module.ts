@@ -10,6 +10,7 @@ import { DashboardComponent } from "./components/admin/dashboard/dashboard/dashb
 import { AuthGuard } from "./guards/auth.guard";
 import { CapacityListComponent } from "./components/admin/capacity-list/capacity-list.component";
 import { RegisterCrossingComponent } from "./components/admin/register-crossing/register-crossing.component";
+import { PaymentResultComponent } from "./components/public/payment-result/payment-result.component";
 
 const routes: Routes = [
   {
@@ -18,11 +19,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     children: [
-      // {
-      //   path: Links.adminTurnInquiry.name,
-      //   component: AdminTurnInquiryComponent,
-      // },
-      // { path: Links.dashboardHome.name, component: DashboardHomeComponent },
       {
         path: Links.capacityList.name,
         component: CapacityListComponent,
@@ -31,27 +27,6 @@ const routes: Routes = [
         path: Links.registerCrossing.name,
         component: RegisterCrossingComponent,
       },
-      // {
-      //   path: Links.capacityManagement.name + "/:selectedPassingRoleDateID",
-      //   component: CapacityManagementComponent,
-      // },
-      // { path: Links.crossingList.name, component: CrossingListComponent },
-      // {
-      //   path: Links.lastAddedQueueList.name,
-      //   component: LastAddedQueueListComponent,
-      // },
-      // {
-      //   path: Links.manualQueueList.name,
-      //   component: ManualQueueListComponent,
-      // },
-      // {
-      //   path: Links.queueListByDate.name + "/:selectedPassingRoleDateID",
-      //   component: QueueListByDateComponent,
-      // },
-      // {
-      //   path: Links.registerCrossing.name,
-      //   component: RegisterCrossingComponent,
-      // },
     ],
   },
   {
@@ -71,6 +46,10 @@ const routes: Routes = [
         title: "Free Zone Plus",
       },
     ],
+  },
+  {
+    path: Links.paymentResult.name,
+    component: PaymentResultComponent,
   },
   {
     path: Links.login.name,

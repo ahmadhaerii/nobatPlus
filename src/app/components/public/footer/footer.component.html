@@ -2,19 +2,6 @@
   <div class="ftr__grid">
     <!-- راست (RTL): لینک‌ها — href ها را خودتان تغییر دهید -->
     <nav class="links" aria-label="پیوندها">
-      <a class="link" href="#">
-        <span>منطفه آزاد ماکو</span>
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-          <path
-            d="M20 12H5m5-6l-6 6 6 6"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </a>
       <a class="link" (click)="onAdminClick()">
         <span>ورود مدیر سامانه</span>
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
@@ -95,10 +82,25 @@
       </div>
     </div>
 
-    <!-- چپ: لوگو بزرگ -->
+    <!-- چپ: نماد اعتماد + لوگو بزرگ -->
+    <div class="enamad">
+      <a
+        referrerpolicy="origin"
+        target="_blank"
+        href="https://trustseal.enamad.ir/?id=8655310&Code=i9QCaICVET5N7IasCazBNRLqKnpiC6Vd"
+        ><img
+          referrerpolicy="origin"
+          src="https://trustseal.enamad.ir/logo.aspx?id=8655310&Code=i9QCaICVET5N7IasCazBNRLqKnpiC6Vd"
+          alt="نماد اعتماد الکترونیکی"
+          width="100px"
+          height="100px"
+          style="cursor: pointer"
+          code="i9QCaICVET5N7IasCazBNRLqKnpiC6Vd"
+      /></a>
+    </div>
     <div class="logo">
-      <img src="assets/images/free-zone-plus.png" alt="NobatPlus" />
-      <strong>Free Zone Plus</strong>
+      <img src="assets/images/free-zone-plus.png" alt="FZPlus" />
+      <strong>FZPlus</strong>
       <i class="line"></i>
       <span class="dots"><b></b><b></b><b></b></span>
     </div>

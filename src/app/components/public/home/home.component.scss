@@ -1,28 +1,72 @@
+/* ───────── رنگ‌ها (فقط در همین فایل) ───────── */
+$page-from: #fbfbfc;
+$page-to: #e9ebee;
+$glow-green: rgba(47, 158, 79, 0.13);
+$glow-blue: rgba(59, 130, 196, 0.1);
+$dot: rgba(107, 114, 128, 0.28);
+$ring: rgba(107, 114, 128, 0.18);
+
+$text-strong: #111827;
+$text: #374151;
+$accent: #2f9e4f; /* سبز لوگو */
+$accent-light: #38ad59;
+$accent-dark: #2a8f46;
+$accent-soft: #8bd3a0;
+$accent-shadow: rgba(47, 158, 79, 0.35);
+
+$panel-bg: #ffffff;
+$panel-glow: rgba(47, 158, 79, 0.08);
+$panel-border: #e5e7eb;
+$panel-shadow: rgba(17, 24, 39, 0.12);
+
+$head-from: #e3f3e8; /* هدر پنل: سبز خیلی روشن */
+$head-to: #f4faf6;
+$head-border: #cfe6d6;
+$head-text: #14532d;
+
+$card-from: #ffffff;
+$card-to: #f3f4f6;
+$card-border: #e5e7eb;
+$card-shadow: rgba(17, 24, 39, 0.1);
+$icon-ring: rgba(47, 158, 79, 0.12);
+$on-accent: #ffffff;
+$radius: 18px;
+
 :host {
   display: block;
   flex: 1;
   position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 700px 420px at 88% 8%, $glow-green, transparent 70%),
+    radial-gradient(ellipse 800px 500px at 10% 90%, $glow-blue, transparent 70%),
+    linear-gradient(180deg, $page-from, $page-to);
 }
 :host::before {
-  /* پس‌زمینه صفحه اصلی */
+  /* نقطه‌چین محو */
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url("/assets/images/main-bg.jpg") center / cover no-repeat;
+  background-image: radial-gradient($dot 1.2px, transparent 1.3px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(135deg, #000, transparent 55%);
+  mask-image: linear-gradient(135deg, #000, transparent 55%);
+  pointer-events: none;
 }
 :host::after {
-  /* لایه آبی روی عکس */
+  /* حلقه‌های تزئینی */
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(11, 58, 99, 0.55),
-    rgba(8, 42, 74, 0.85)
-  );
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 0% 85%, transparent 259px, $ring 259px, $ring 261px, transparent 261px),
+    radial-gradient(circle at 0% 85%, transparent 169px, $ring 169px, $ring 171px, transparent 171px),
+    radial-gradient(circle at 100% 0%, transparent 309px, $ring 309px, $ring 311px, transparent 311px);
 }
+
 .home {
   position: relative;
   z-index: 1;
@@ -33,57 +77,73 @@
 .intro {
   max-width: 1100px;
   margin-inline-start: auto;
+  color: $text;
+  animation: fadeUp 0.5s ease both;
   h1 {
     margin: 0 0 0.8rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    .bang {
-      color: var(--bp-green-400);
+    color: $text-strong;
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 1.1em;
+      margin-inline-end: 0.75rem;
+      vertical-align: -0.15em;
+      border-radius: 3px;
+      background: linear-gradient($accent, $accent-soft);
     }
   }
   h2 {
     margin: 0 0 0.8rem;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 800;
+    color: $text-strong;
     .bang {
-      color: var(--bp-green-400);
+      color: $accent;
     }
   }
   p {
     margin: 0;
     font-size: 1.1rem;
     line-height: 2.1;
-  }
-  .hl {
-    color: var(--bp-green-400);
+    color: $text;
   }
 }
+
 .panel {
   margin: 2.2rem 0 0;
   max-width: 1100px;
   margin-inline-start: auto;
-  border-radius: var(--bp-radius);
+  border-radius: $radius;
   overflow: hidden;
-  color: var(--bp-ink);
-  background: #fff;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  color: $text-strong;
+  background:
+    radial-gradient(circle at 12% 110%, $panel-glow, transparent 45%),
+    $panel-bg;
+  border: 1px solid $panel-border;
+  box-shadow: 0 16px 40px $panel-shadow;
+  animation: fadeUp 0.6s 0.1s ease both;
 }
-
 .panel__head {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  background: linear-gradient(270deg, var(--bp-navy-800), #0c4a7a);
-  border-inline-start: 5px solid var(--bp-green-500);
+  background: linear-gradient(270deg, $head-from, $head-to);
+  border-bottom: 1px solid $head-border;
+  border-inline-start: 5px solid $accent;
   padding: 0.8rem 1.4rem;
   span {
-    color: #fff;
+    color: $head-text;
     font-weight: 700;
     font-size: 1rem;
   }
   .logo-company {
     height: 32px;
-    background: white;
+    background: #fff;
     border-radius: 50%;
+    border: 1px solid $panel-border;
   }
 }
 .panel__body {
@@ -98,19 +158,21 @@
   position: relative;
   width: 170px;
   padding: 0.9rem 0.7rem 0.7rem;
-  border-radius: 14px;
-  border: 1px solid #cfe0ee;
-  background: #f4f8fc;
+  border-radius: 16px;
+  border: 1px solid $card-border;
+  background: linear-gradient(180deg, $card-from, $card-to);
+  box-shadow: 0 10px 24px $card-shadow;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
+  cursor: pointer;
   transition:
-    transform 0.15s,
-    box-shadow 0.15s;
+    transform 0.2s,
+    box-shadow 0.2s;
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 22px rgba(11, 58, 99, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 30px rgba(17, 24, 39, 0.16);
   }
 }
 .service__icon {
@@ -120,6 +182,9 @@
   background: #fff;
   display: grid;
   place-items: center;
+  box-shadow:
+    0 0 0 5px $icon-ring,
+    0 6px 14px rgba(17, 24, 39, 0.12);
   img {
     width: 76px;
   }
@@ -128,10 +193,35 @@
   width: 100%;
   padding: 0.5rem;
   border-radius: 8px;
-  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: $on-accent;
   font-weight: 700;
   font-size: 0.95rem;
-  background: var(--bp-green-500);
+  background: linear-gradient(180deg, $accent-light, $accent-dark);
+  box-shadow: 0 6px 14px $accent-shadow;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .panel {
+    animation: none;
+  }
+  .service {
+    transition: none;
+  }
 }
 
 @media (max-width: 700px) {

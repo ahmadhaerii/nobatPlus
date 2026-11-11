@@ -43,6 +43,7 @@ import { RegisterCrossingComponent } from "./components/admin/register-crossing/
 import { ManualQueueFormDialogComponent } from "./components/dialog/manual-queue-form-dialog/manual-queue-form-dialog.component";
 import { QueueListByHourDialogComponent } from "./components/dialog/queue-list-by-hour-dialog/queue-list-by-hour-dialog.component";
 import { AddManualQueueTcDialogComponent } from "./components/dialog/add-manual-queue-tc-dialog/add-manual-queue-tc-dialog.component";
+import { PaymentResultComponent } from "./components/public/payment-result/payment-result.component";
 export let AppInjector: Injector;
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ export let AppInjector: Injector;
     ManualQueueFormDialogComponent,
     QueueListByHourDialogComponent,
     AddManualQueueTcDialogComponent,
+    PaymentResultComponent,
 
     FilterTableDirective,
     DigitGroupPipe,

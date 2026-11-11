@@ -1,21 +1,46 @@
+/* ───────── رنگ‌ها (فقط در همین فایل) ───────── */
+$bg-from: #ffffff;
+$bg-to: #f4f6f5;
+$page-bg: #fbfbfc; /* پس‌زمینه‌ی پشت هدر */
+$border: #e5e7eb;
+$text: #374151;
+$text-strong: #111827;
+$accent: #2f9e4f; /* سبز لوگو */
+$accent-light: #38ad59;
+$accent-dark: #2a8f46;
+$btn-border: #d1d5db;
+$btn-border-hover: #9ca3af;
+$btn-bg-from: #ffffff;
+$btn-bg-to: #f3f4f6;
+$btn-text: #374151;
+$on-accent: #ffffff;
+$shadow: rgba(17, 24, 39, 0.09);
+$shadow-ring: rgba(255, 255, 255, 0.5);
+$accent-shadow: rgba(47, 158, 79, 0.35);
+$radius: 16px;
+
+:host {
+  display: block;
+  position: relative;
+  z-index: 5;
+  background: $page-bg;
+  padding: 1rem 1.25rem 0;
+}
 .hdr {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 1rem 1.25rem 0;
   padding: 0.6rem 1.4rem;
   min-height: 68px;
-  border-radius: var(--bp-radius);
-  background: linear-gradient(
-    270deg,
-    rgba(47, 158, 79, 0.9) 0,
-    var(--bp-navy-800) 6px,
-    var(--bp-navy-800) 55%,
-    var(--bp-navy-700) 100%
-  );
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-radius: $radius;
+  color: $text;
+  background: linear-gradient(270deg, $bg-from, $bg-to);
+  border: 1px solid $border;
+  border-inline-start: 6px solid $accent;
+  box-shadow:
+    0 8px 24px $shadow,
+    0 0 0 4px $shadow-ring;
   position: relative;
-  z-index: 5;
 }
 .brand {
   display: flex;
@@ -32,6 +57,7 @@
   letter-spacing: 0.02em;
   direction: ltr;
   font-size: 1.05rem;
+  color: $text-strong;
   position: relative;
   padding-bottom: 4px;
   i {
@@ -39,7 +65,7 @@
     inset: auto 0 0 0;
     height: 3px;
     border-radius: 2px;
-    background: var(--bp-green-400);
+    background: $accent;
   }
 }
 .actions {
@@ -49,7 +75,7 @@
 }
 .who {
   font-size: 0.95rem;
-  opacity: 0.95;
+  color: $text;
 }
 
 .login,
@@ -61,26 +87,38 @@
   padding: 0.5rem 1.1rem;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.08);
-  transition: background 0.15s;
+  cursor: pointer;
+  color: $btn-text;
+  border: 1px solid $btn-border;
+  background: linear-gradient($btn-bg-from, $btn-bg-to);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    transform 0.15s;
   &:hover {
-    background: rgba(255, 255, 255, 0.18);
+    border-color: $btn-border-hover;
+    box-shadow: 0 4px 10px rgba(17, 24, 39, 0.1);
   }
 }
 .login {
-  background: var(--bp-green-500);
-  border-color: transparent;
+  color: $on-accent;
   font-weight: 700;
+  border-color: transparent;
+  background: linear-gradient(180deg, $accent-light, $accent-dark);
+  box-shadow: 0 6px 14px $accent-shadow;
   &:hover {
-    background: #38b05a;
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px $accent-shadow;
   }
 }
 
 @media (max-width: 600px) {
+  :host {
+    padding: 0.5rem 0.5rem 0;
+  }
   .hdr {
-    margin: 0.5rem;
     padding: 0.5rem 0.8rem;
   }
   .brand__word {
