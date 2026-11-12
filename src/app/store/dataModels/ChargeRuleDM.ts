@@ -37,9 +37,10 @@ export class PaymentResultItemDM extends Datamodel {
 @JsonObject("PaymentResultDM")
 export class PaymentResultDM extends Datamodel {
   @JsonProperty("PGReference", String, true) pgReference = "";
-  @JsonProperty("MobileNo", String, true) mobileNo = "";
-  @JsonProperty("Amount", String, true) amount = "";
   @JsonProperty("UserQueueNumber", String, true) userQueueNumber = "";
+  @JsonProperty("ServiceRoleDateTime", String, true) serviceRoleDateTime = "";
+  @JsonProperty("MobileNo", String, true) mobileNo = "";
+  @JsonProperty("Amount", Number, true) amount = 0;
   @JsonProperty("Items", [PaymentResultItemDM], true)
   items: PaymentResultItemDM[] = [];
 }
