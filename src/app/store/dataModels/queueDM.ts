@@ -4,28 +4,25 @@ import { PassengerDM } from "./turnInquiryDM";
 
 @JsonObject("QueueDM")
 export default class QueueDM extends Datamodel {
-  @JsonProperty("UserQueueNumber", String, true) override id: String = "";
-  @JsonProperty("CancelDate", String, true) cancelDate: String = "";
+  @JsonProperty("ServiceQueueID", Number, true) override id: number = 0;
+  @JsonProperty("ServiceQueueID", Number, true) serviceQueueId: number = 0;
+  @JsonProperty("Chassis", String, true) chassis: String = "";
+  @JsonProperty("ServiceTitle", String, true) serviceTitle: String = "";
+  @JsonProperty("CancelTime", String, true) cancelTime: String = "";
+  @JsonProperty("ServiceCheckedInTime", String, true)
+  serviceCheckedInTime: string = "";
+  @JsonProperty("ServiceExpireDate", String) serviceExpireDate: String = "";
+  @JsonProperty("ServiceExpireTime", String) serviceExpireTime: string = "";
   @JsonProperty("CancelDescription", String, true) cancelDescription: String =
     "";
-  @JsonProperty("CancelTime", String, true) cancelTime: String = "";
-  @JsonProperty("UserQueueNumber", String, true) userQueueNumber: String = "";
-  @JsonProperty("PassengerCount", Number) passengerCount: number = 0;
-  @JsonProperty("Passengers", [PassengerDM], true) passengers: PassengerDM[] =
-    [];
-  @JsonProperty("PsInfoID", String, true) psInfoID: String = "";
-  @JsonProperty("PsMobileNo", String, true) psMobileNo: String = "";
-  @JsonProperty("PsFirstName", String, true) psFirstName: String = "";
-  @JsonProperty("PsLastName", String, true) psLastName: String = "";
-  @JsonProperty("PassingExpireDate", String, true) passingExpireDate: String =
-    "";
-  @JsonProperty("PassingExpireTime", String, true) passingExpireTime: String =
-    "";
-  @JsonProperty("PassingRoleDate", String, true) passingRoleDate: String = "";
-  @JsonProperty("PassingRoleTime", String, true) passingRoleTime: String = "";
-  @JsonProperty("PassingCheckedInDate", String, true)
-  passingCheckedInDate: String = "";
-  @JsonProperty("PassingCheckedInTime", String, true)
-  passingCheckedInTime: String = "";
+  @JsonProperty("MobileNo", String, true) mobileNo: String = "";
   @JsonProperty("StatusTitle", String, true) statusTitle: String = "";
+  @JsonProperty("ServiceRoleTime", String, true) serviceRoleTime: String = "";
+  @JsonProperty("CancelDate", String, true) cancelDate: String = "";
+  @JsonProperty("ServiceRoleDate", String, true) serviceRoleDate: String = "";
+  @JsonProperty("UserQueueNumber", String, true) userQueueNumber: String = "";
+  @JsonProperty("ServiceCheckedInDate", String, true)
+  serviceCheckedInDate: String = "";
+  @JsonProperty("CarType", String, true) carType: String = "";
+  @JsonProperty("Status", String, true) status: String = "";
 }

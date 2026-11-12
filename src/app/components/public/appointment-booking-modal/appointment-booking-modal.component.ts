@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { NiraModalConfig } from "nira-modal";
 import { Subject } from "rxjs";
 import { QueueApiService } from "src/app/api/queue-api.service";
 import { AppointmentBookingService } from "src/app/services/appointment-booking.service";
+import { Links } from "src/app/utils/links";
 
 @Component({
   selector: "bp-appointment-booking-modal",
@@ -24,6 +26,7 @@ export class AppointmentBookingModalComponent implements OnInit {
     private fb: FormBuilder,
     public appointmentBooking: AppointmentBookingService,
     private queueApiService: QueueApiService,
+    private router: Router,
   ) {}
   ngOnInit(): void {
     this.id = this.config.data.id;
@@ -35,14 +38,22 @@ export class AppointmentBookingModalComponent implements OnInit {
   async confirm() {
     this.loading = true;
     try {
-      await this.queueApiService.addQueue(
+      const result = await this.queueApiService.addQueue(
         this.id,
         this.form.get("chassisNumber")?.value!,
         this.form.get("vehiclePlate")?.value!,
       );
       this.close();
-    } catch (error) {
+      this.router.navigate(["/payment-result"], {
+        queryParams: {
+          ID: result.pgReference,
+          status: "Success",
+          result: JSON.stringify(result),
+        },
+      });
+    } catch (error: any) {
       console.error(error);
+      this.error = error.ErrorText_Fa;
     }
     this.loading = false;
   }

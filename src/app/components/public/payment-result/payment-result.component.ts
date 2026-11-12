@@ -30,9 +30,13 @@ export class PaymentResultComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       this.invoiceId = params.get("ID");
       const status: any = params.get("status");
+      const result: any = params.get("result");
+      try {
+        this.paymentResult = JSON.parse(result);
+      } catch (e) {}
       this.status = status;
     });
-    await this.getPaymentResult();
+    // await this.getPaymentResult();
   }
 
   async getPaymentResult() {
@@ -70,6 +74,6 @@ export class PaymentResultComponent implements OnInit {
   }
 
   goToHome() {
-    this.router.navigate([""]);
+    this.router.navigate(["/"]);
   }
 }

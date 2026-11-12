@@ -11,6 +11,7 @@ import { AuthGuard } from "./guards/auth.guard";
 import { CapacityListComponent } from "./components/admin/capacity-list/capacity-list.component";
 import { RegisterCrossingComponent } from "./components/admin/register-crossing/register-crossing.component";
 import { PaymentResultComponent } from "./components/public/payment-result/payment-result.component";
+import { QueueListComponent } from "./components/admin/queue-list/queue-list.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: Links.capacityList.name,
         component: CapacityListComponent,
+      },
+      {
+        path: Links.queueList.name,
+        component: QueueListComponent,
       },
       {
         path: Links.registerCrossing.name,

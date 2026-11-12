@@ -58,14 +58,14 @@ export class SlideMenuComponent {
       access: "",
       child: [],
     },
-    // {
-    //   title: this.labels.manualQueueList,
-    //   icon: ListAltIconComponent,
-    //   link: this.links.manualQueueList.route,
-    //   type: "menu",
-    //   access: "",
-    //   child: [],
-    // },
+    {
+      title: this.labels.queueList,
+      icon: ListAltIconComponent,
+      link: this.links.queueList.route,
+      type: "menu",
+      access: "",
+      child: [],
+    },
     // {
     //   title: this.labels.lastAddedQueueList,
     //   icon: ListAltIconComponent,

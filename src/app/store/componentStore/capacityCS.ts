@@ -24,10 +24,6 @@ export class CapacityCS {
     });
   }
 
-  async capacityList() {
-    return await this.capacityDS.capacityList();
-  }
-
   async addRole(fromDate: string, toDate: string, hours: number[]) {
     return await this.capacityDS.addRole(fromDate, toDate, hours);
   }

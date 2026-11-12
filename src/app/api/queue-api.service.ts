@@ -5,6 +5,7 @@ import QueueDM from "../store/dataModels/queueDM";
 import PassengerInfoDM, {
   PassengerInfoErrorDM,
 } from "../store/dataModels/passengerInfoDM";
+import { PaymentResultDM } from "../store/dataModels/ChargeRuleDM";
 
 @Injectable({
   providedIn: "root",
@@ -12,11 +13,14 @@ import PassengerInfoDM, {
 export class QueueApiService {
   constructor(private httpRequest: HttpRequestService) {}
 
-  public async QueueListByDate(passingRoleDateID: string, status: string) {
+  public async QueueListByDate(date: string, serviceTypeId: string) {
     const data: any = await this.httpRequest.GET(
-      "/PassingQueue/QueueListByDate/" + passingRoleDateID + "/" + status,
+      "/ServiceQueue/QueueListByDate/" +
+        date.replaceAll("-", "") +
+        "/" +
+        serviceTypeId,
     );
-    return JsonParser.deserializeArray(data.PassingQueues, QueueDM);
+    return JsonParser.deserializeArray(data.ServiceQueues, QueueDM);
   }
 
   public async QueueListByHour(passingRoleHourCode: string) {
@@ -35,7 +39,7 @@ export class QueueApiService {
       "/ServiceQueue/AddQueue",
       params,
     );
-    return data;
+    return JsonParser.deserializeObject(data.Queue, PaymentResultDM);
   }
   public async AddManualQueue(
     psMobileNo: string,

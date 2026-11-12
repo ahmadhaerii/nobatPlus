@@ -1,6 +1,7 @@
 enum routeNames {
   adminTurnInquiry = "turnInquiry",
   capacityList = "capacity-list",
+  queueList = "queue-list",
   capacityManagement = "capacity-management",
   crossingList = "crossing-list",
   dashboard = "dashboard",
@@ -28,6 +29,7 @@ export enum routeLinks {
     "/" +
     routeNames.adminTurnInquiry,
   capacityList = "/" + routeNames.dashboard + "/" + routeNames.capacityList,
+  queueList = "/" + routeNames.dashboard + "/" + routeNames.queueList,
   capacityManagement = "/" +
     routeNames.dashboard +
     "/" +
@@ -72,6 +74,10 @@ export const Links = {
   capacityList: {
     name: routeNames.capacityList,
     route: routeLinks.capacityList,
+  },
+  queueList: {
+    name: routeNames.queueList,
+    route: routeLinks.queueList,
   },
   capacityManagement: {
     name: routeNames.capacityManagement,

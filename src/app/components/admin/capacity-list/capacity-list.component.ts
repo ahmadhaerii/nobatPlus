@@ -88,7 +88,6 @@ export class CapacityListComponent {
 
   constructor(
     private labelManagerService: LabelManagerService,
-    private httpService: HttpRequestService,
     private capacityCS: CapacityCS,
     private router: Router,
   ) {}
@@ -114,7 +113,7 @@ export class CapacityListComponent {
   async getList() {
     this.loading = true;
     try {
-      const data = await this.capacityCS.capacityList();
+      const data = await this.capacityCS.doLoad();
       this.serviceRoles.next(data);
       if (data.length > 0) {
         this.defaultServiceRole = data[0];
