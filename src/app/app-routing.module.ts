@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./components/public/home/home.component";
+import { HelpComponent } from "./components/public/help/help.component";
 import { LoginComponent } from "./components/admin/login/login.component";
 import { SlotsComponent } from "./components/public/slots/slots.component";
 import { UserAuthGuard } from "./guards/user-auth.guard";
@@ -42,6 +43,11 @@ const routes: Routes = [
       {
         path: "",
         component: HomeComponent,
+        title: "Free Zone Plus",
+      },
+      {
+        path: Links.help.name,
+        component: HelpComponent,
         title: "Free Zone Plus",
       },
       {

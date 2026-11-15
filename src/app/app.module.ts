@@ -12,6 +12,7 @@ import { AppointmentBookingModalComponent } from "./components/public/appointmen
 import { FooterComponent } from "./components/public/footer/footer.component";
 import { HeaderComponent } from "./components/public/header/header.component";
 import { HomeComponent } from "./components/public/home/home.component";
+import { HelpComponent } from "./components/public/help/help.component";
 import { LoginModalComponent } from "./components/public/login-modal/login-modal.component";
 import { SlotsComponent } from "./components/public/slots/slots.component";
 
@@ -54,6 +55,7 @@ export let AppInjector: Injector;
     FooterComponent,
     HeaderComponent,
     HomeComponent,
+    HelpComponent,
     LoginComponent,
     LoginModalComponent,
     SlotsComponent,
