@@ -1,15 +1,13 @@
 import { UserLanguage } from "src/app/services/label-manager.service";
 
 export interface IQueueList {
-  tableHeaderDate: string;
-  tableHeaderTotalCapacity: string;
-  tableHeaderTurnReceived: string;
-  tableHeaderRemainingCapacity: string;
-  tableHeaderDayOfWeek: string;
-  tableHeaderPassingCheckedInCount: string;
-  tableHeaderPassengerCount: string;
-  tableHeaderVoidCount: string;
-  registerCrossing: string;
+  chassis: string;
+  carType: string;
+  mobileNo: string;
+  status: string;
+  serviceRoleDate: string;
+  serviceCheckedInDate: string;
+  cancelDate: string;
 
   titleCardTitle: string;
   titleCardDescription: string;
@@ -21,7 +19,6 @@ export interface IQueueList {
   excelButtonName: string;
   addButtonName: string;
   tableHeaderUserQueueNumber: string;
-  tableHeaderPsInfoID: string;
   tableHeaderPsMobileNo: string;
   tableHeaderPsFirstName: string;
   tableHeaderPsLastName: string;
@@ -39,14 +36,13 @@ export interface IQueueList {
 
 export const Labels: Record<UserLanguage, IQueueList> = {
   fa: {
-    tableHeaderDate: "تاریخ",
-    tableHeaderTotalCapacity: "ظرفیت کل",
-    tableHeaderTurnReceived: "نوبت دریافتی",
-    tableHeaderRemainingCapacity: "ظرفیت مانده",
-    tableHeaderDayOfWeek: "روز",
-    tableHeaderPassingCheckedInCount: " تردد",
-    tableHeaderPassengerCount: " تعداد مسافر",
-    tableHeaderVoidCount: " ابطال شده",
+    chassis: "شماره شاسی",
+    carType: "نوع خودرو",
+    mobileNo: "موبایل",
+    status: "وظعیت",
+    serviceRoleDate: "زمان مراجعه",
+    serviceCheckedInDate: " زمان کنترل",
+    cancelDate: " زمان کنسلی",
 
     titleCardTitle: "لیست عبور",
     titleCardDescription: "در این بخش، می توانید لیست عبور را مدیریت کنید. ",
@@ -58,7 +54,6 @@ export const Labels: Record<UserLanguage, IQueueList> = {
     excelButtonName: "اکسل",
     addButtonName: "جدید",
     tableHeaderUserQueueNumber: "شماره نوبت",
-    tableHeaderPsInfoID: "کد ملی",
     tableHeaderPsMobileNo: "شماره همراه",
     tableHeaderPsFirstName: "نام",
     tableHeaderPsLastName: "نام خانوادگی",
@@ -72,18 +67,15 @@ export const Labels: Record<UserLanguage, IQueueList> = {
     confirmDeleteTitle: "حذف  ",
     fromDate: "از تاریخ",
     toDate: "تا تاریخ",
-    registerCrossing: "مدیریت ظرفیت ها",
   },
   en: {
-    tableHeaderDate: "Date",
-    tableHeaderTotalCapacity: "TotalCapacity",
-    tableHeaderTurnReceived: "TurnReceived",
-    tableHeaderRemainingCapacity: "RemainingCapacity",
-    tableHeaderPsInfoID: "tableHeaderPsInfoID",
-    tableHeaderDayOfWeek: "tableHeaderDayOfWeek",
-    tableHeaderPassingCheckedInCount: "tableHeaderPassingCheckedInCount",
-    tableHeaderPassengerCount: "tableHeaderPassengerCount",
-    tableHeaderVoidCount: "tableHeaderVoidCount",
+    chassis: "chassis",
+    carType: "Car Type",
+    mobileNo: "Mobile ",
+    status: "Status",
+    serviceRoleDate: "Service Role Date",
+    serviceCheckedInDate: "Service Checked In Date",
+    cancelDate: "Cancel Date",
 
     titleCardTitle: "Freight charge type",
     titleCardDescription:
@@ -109,6 +101,5 @@ export const Labels: Record<UserLanguage, IQueueList> = {
     delete: "delete",
     fromDate: "fromDate",
     toDate: "toDate",
-    registerCrossing: "Register Crossing",
   },
 };
