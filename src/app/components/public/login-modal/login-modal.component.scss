@@ -81,6 +81,41 @@ input {
   color: #c0392b;
   font-size: 0.82rem;
 }
+.ok {
+  color: var(--bp-green-500);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* باکس‌های ۴ رقمی کد تایید */
+.otp-holder {
+  display: flex;
+  justify-content: center;
+  margin: 0.4rem 0 0.2rem;
+}
+:host ::ng-deep .otp-wrap {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+}
+:host ::ng-deep .otp-box {
+  width: 52px;
+  height: 56px;
+  padding: 0;
+  text-align: center;
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 1.5px solid #c9d3de;
+  background: #f8fafc;
+  color: var(--bp-ink);
+  &:focus {
+    outline: none;
+    border-color: var(--bp-green-500);
+    box-shadow: 0 0 0 3px rgba(47, 158, 79, 0.2);
+  }
+}
 .bp-btn {
   margin-top: 0.8rem;
   width: 100%;

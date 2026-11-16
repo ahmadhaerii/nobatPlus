@@ -102,6 +102,7 @@ $badge-shadow: rgba(0, 0, 0, 0.12);
   align-items: center;
   gap: 0.7rem;
   font-size: 0.95rem;
+  cursor: pointer;
   color: $text;
   svg {
     color: $icon;

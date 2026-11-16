@@ -1,0 +1,15 @@
+<div
+  class="w-full h-full flex justify-center items-center font-semibold text-justify"
+>
+  در حال انتقال به درگاه پرداخت...
+</div>
+<form
+  #paymentForm
+  id="paymentForm"
+  name="paymentForm"
+  method="post"
+  [action]="this.redirectURL"
+>
+  <input type="hidden" name="Token" [value]="this.token" />
+  <input name="GetMethod" type="hidden" value="false" />
+</form>

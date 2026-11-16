@@ -35,6 +35,14 @@
         formControlName="vehiclePlate"
         autocomplete="chassisNu"
       />
+      <div class="font-amount" *ngIf="amount > 0">
+        <span>هزینه خدمات : </span>
+        <span> {{ amount | priceFormat: "T" | persianDigits }} </span>
+      </div>
+      <p *ngIf="amount > 0">
+        پس از تایید به درگاه پرداخت هدایت می شوید بعد از تکمیل فرایند پرداخت
+        خواهشمند است تا صدور نوبت منتظر بمانید
+      </p>
       <small class="err" *ngIf="error">{{ error }}</small>
       <button class="bp-btn" type="submit" [disabled]="loading">
         {{ loading ? "در حال ارسال…" : "ثبت اطلاعات" }}

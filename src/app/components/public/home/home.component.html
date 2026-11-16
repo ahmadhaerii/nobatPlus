@@ -19,7 +19,7 @@
         *ngFor="let service of services"
         type="button"
         class="service"
-        (click)="open('slots/' + service.serviceTypeId)"
+        (click)="open(service)"
       >
         <span class="service__icon"
           ><img

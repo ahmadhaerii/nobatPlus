@@ -9,6 +9,11 @@
   backdrop-filter: blur(6px);
   animation: fade 0.18s ease-out;
 }
+.font-amount {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 8px;
+}
 .modal {
   position: relative;
   width: min(420px, 100%);

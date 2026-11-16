@@ -1,0 +1,265 @@
+/* ───────── رنگ‌ها (هماهنگ با صفحه اول) ───────── */
+$page-from: #fbfbfc;
+$page-to: #e9ebee;
+$glow-green: rgba(47, 158, 79, 0.13);
+$glow-blue: rgba(59, 130, 196, 0.1);
+$dot: rgba(107, 114, 128, 0.28);
+$ring: rgba(107, 114, 128, 0.18);
+
+$text-strong: #111827;
+$text: #374151;
+$muted: #9ca3af;
+$accent: #2f9e4f;
+$accent-light: #38ad59;
+$accent-dark: #2a8f46;
+$accent-soft: #8bd3a0;
+$accent-shadow: rgba(47, 158, 79, 0.35);
+$icon-ring: rgba(47, 158, 79, 0.14);
+
+$card-bg: #ffffff;
+$card-border: #e5e7eb;
+$card-shadow: rgba(17, 24, 39, 0.1);
+$head-from: #e3f3e8;
+$head-to: #f4faf6;
+$head-border: #cfe6d6;
+$on-accent: #ffffff;
+$radius: 14px;
+
+:host {
+  display: block;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 700px 420px at 88% 8%, $glow-green, transparent 70%),
+    radial-gradient(ellipse 800px 500px at 10% 90%, $glow-blue, transparent 70%),
+    linear-gradient(180deg, $page-from, $page-to);
+}
+:host::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient($dot 1.2px, transparent 1.3px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(135deg, #000, transparent 55%);
+  mask-image: linear-gradient(135deg, #000, transparent 55%);
+  pointer-events: none;
+}
+:host::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 0% 85%, transparent 259px, $ring 259px, $ring 261px, transparent 261px),
+    radial-gradient(circle at 0% 85%, transparent 169px, $ring 169px, $ring 171px, transparent 171px),
+    radial-gradient(circle at 100% 0%, transparent 309px, $ring 309px, $ring 311px, transparent 311px);
+}
+
+.help {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  color: $text-strong;
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 0.8rem;
+  border-radius: 50%;
+  color: $on-accent;
+  background: linear-gradient(180deg, $accent-light, $accent-dark);
+  box-shadow:
+    0 0 0 5px $icon-ring,
+    0 8px 18px $accent-shadow;
+}
+
+.hero,
+.faq {
+  text-align: center;
+  animation: fadeUp 0.5s ease both;
+}
+.faq {
+  margin-top: 3rem;
+  animation-delay: 0.1s;
+}
+
+h1,
+h2 {
+  margin: 0 0 0.7rem;
+  font-weight: 800;
+  color: $text-strong;
+}
+h1 {
+  font-size: 1.4rem;
+}
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1.6rem;
+}
+.hero p {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: $text;
+}
+
+/* ───────── جستجو ───────── */
+.search {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  max-width: 760px;
+  margin: 0 auto;
+  height: 42px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid $card-border;
+  box-shadow: 0 6px 16px rgba(17, 24, 39, 0.06);
+  overflow: hidden;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  &:focus-within {
+    border-color: $accent;
+    box-shadow: 0 0 0 3px $icon-ring;
+  }
+  input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    padding: 0 1rem;
+    font: inherit;
+    font-size: 0.95rem;
+    color: $text-strong;
+    &::placeholder {
+      color: $muted;
+    }
+  }
+}
+.search__icon {
+  order: -1;
+  width: 44px;
+  display: grid;
+  place-items: center;
+  color: $accent;
+  border-inline-end: 1px solid $card-border;
+  background: #fafafa;
+}
+
+/* ───────── آکاردئون ───────── */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  text-align: start;
+}
+.item {
+  border-radius: $radius;
+  background: $card-bg;
+  border: 1px solid $card-border;
+  box-shadow: 0 6px 18px $card-shadow;
+  overflow: hidden;
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
+  &:hover {
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.14);
+  }
+  &--open {
+    border-color: $head-border;
+    .item__head {
+      background: linear-gradient(270deg, $head-from, $head-to);
+      color: #14532d;
+    }
+    .item__chev {
+      transform: rotate(180deg);
+      color: $accent;
+    }
+    .item__body {
+      grid-template-rows: 1fr;
+    }
+  }
+}
+.item__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.4rem;
+  border: 0;
+  background: transparent;
+  color: $text-strong;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: start;
+  transition: background 0.2s;
+}
+.item__chev {
+  flex-shrink: 0;
+  color: $text;
+  transition:
+    transform 0.25s,
+    color 0.2s;
+}
+.item__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+.item__inner {
+  overflow: hidden;
+  min-height: 0;
+  p {
+    margin: 0;
+    padding: 0.9rem 1.4rem 1.2rem;
+    line-height: 2;
+    font-size: 0.95rem;
+    color: $text;
+    border-top: 1px solid $card-border;
+  }
+}
+
+.empty {
+  margin: 1rem 0 0;
+  color: $text;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .faq {
+    animation: none;
+  }
+  .item__body,
+  .item__chev {
+    transition: none;
+  }
+}
+@media (max-width: 700px) {
+  .help {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+  .item__head {
+    padding: 0.9rem 1rem;
+  }
+}

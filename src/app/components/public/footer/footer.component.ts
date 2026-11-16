@@ -11,4 +11,8 @@ export class FooterComponent {
   onAdminClick() {
     this.router.navigate(["/login"]);
   }
+
+  onHelpClick() {
+    this.router.navigate(["/help"]);
+  }
 }

@@ -32,7 +32,6 @@ export class SlotsComponent implements OnInit, AfterViewInit {
   submitting = false;
   trackingCode = false;
 
-  // کشیدن با ماوس/لمس
   private dragging = false;
   private moved = false;
   private startX = 0;
@@ -48,7 +47,6 @@ export class SlotsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    // دریافت مقدار ID از URL
     this.route.paramMap.subscribe(async (params) => {
       this.id = params.get("id");
       if (this.id) {
@@ -111,9 +109,8 @@ export class SlotsComponent implements OnInit, AfterViewInit {
   trackDay = (_: number, d: DaySlot) => d.serviceRoleDateId;
   trackHour = (_: number, h: HourSlot) => h.hour;
 
-  // ---- drag handlers ----
   private onDown = (e: PointerEvent) => {
-    if (e.pointerType === "touch") return; // لمس را مرورگر خودش اسکرول می‌کند
+    if (e.pointerType === "touch") return;
     this.dragging = true;
     this.moved = false;
     this.startX = e.clientX;
@@ -132,6 +129,6 @@ export class SlotsComponent implements OnInit, AfterViewInit {
     if (!this.dragging) return;
     this.dragging = false;
     this.stripRef.nativeElement.classList.remove("is-dragging");
-    setTimeout(() => (this.moved = false)); // بعد از click جاری
+    setTimeout(() => (this.moved = false));
   };
 }
