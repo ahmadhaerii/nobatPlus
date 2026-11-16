@@ -36,46 +36,40 @@ export class QueueListComponent {
 
   columnsSchema = [
     {
-      key: "dayOfWeek",
+      key: "chassis",
       type: COLUMNS_TYPES.TEXT,
-      label: this.labels.tableHeaderDayOfWeek,
+      label: this.labels.chassis,
     },
     {
-      key: "serviceRoleDate",
+      key: "carType",
       type: COLUMNS_TYPES.TEXT,
-      label: this.labels.tableHeaderDate,
+      label: this.labels.carType,
     },
     {
-      key: "totalCapacity",
+      key: "mobileNo",
       type: COLUMNS_TYPES.TEXT,
-      label: this.labels.tableHeaderTotalCapacity,
+      label: this.labels.mobileNo,
     },
     {
-      key: "usedCapacity",
+      key: "statusTitle",
       type: COLUMNS_TYPES.TEXT,
-      label: this.labels.tableHeaderTurnReceived,
+      label: this.labels.status,
     },
     {
-      key: "remainingCapacity",
-      type: COLUMNS_TYPES.NUMBER,
-      label: this.labels.tableHeaderRemainingCapacity,
+      key: "serviceRoleDateTime",
+      type: COLUMNS_TYPES.TEXT,
+      label: this.labels.serviceRoleDate,
     },
-
-    // {
-    //   key: "action",
-    //   type: COLUMNS_TYPES.ACTION_BUTTONS,
-    //   label: "",
-    //   data: [
-    //     {
-    //       key: "list",
-    //       component: ListAltIconComponent,
-    //     },
-    //     {
-    //       key: "manage",
-    //       component: EditSquareIconComponent,
-    //     },
-    //   ],
-    // },
+    {
+      key: "serviceCheckedInDateTime",
+      type: COLUMNS_TYPES.TEXT,
+      label: this.labels.serviceCheckedInDate,
+    },
+    {
+      key: "serviceExpireDateTime",
+      type: COLUMNS_TYPES.TEXT,
+      label: this.labels.cancelDate,
+    },
   ];
 
   get links() {
@@ -108,9 +102,6 @@ export class QueueListComponent {
   }
 
   async submit() {
-    console.log("submit");
-    console.log(this.serviceTypeId);
-    console.log(this.form.controls["formControlDate"].value);
     this.loading = true;
     try {
       const result = await this.queueApiService.QueueListByDate(

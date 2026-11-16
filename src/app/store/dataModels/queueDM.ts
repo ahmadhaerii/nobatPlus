@@ -25,4 +25,16 @@ export default class QueueDM extends Datamodel {
   serviceCheckedInDate: String = "";
   @JsonProperty("CarType", String, true) carType: String = "";
   @JsonProperty("Status", String, true) status: String = "";
+
+  get serviceExpireDateTime() {
+    return this.serviceExpireTime + "  " + this.serviceExpireDate;
+  }
+
+  get serviceRoleDateTime() {
+    return this.serviceRoleTime + "  " + this.serviceRoleDate;
+  }
+
+  get serviceCheckedInDateTime() {
+    return this.serviceCheckedInTime + "  " + this.serviceCheckedInDate;
+  }
 }
