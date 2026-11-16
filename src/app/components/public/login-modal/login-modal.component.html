@@ -57,6 +57,7 @@
     >
       <h2 id="login-title">ورود</h2>
       <p class="hint">رمز عبور خود را وارد کنید .</p>
+      <small class="ok" *ngIf="info">{{ info }}</small>
       <label for="password">رمز عبور</label>
       <input
         id="password"
@@ -79,35 +80,38 @@
       <button class="bp-btn" type="submit" [disabled]="loading">
         {{ loading ? "در حال ارسال…" : "ورود" }}
       </button>
+      <div class="row">
+        <button type="button" class="link" (click)="editMobile()">
+          ویرایش شماره
+        </button>
+        <button
+          type="button"
+          class="link"
+          [disabled]="loading"
+          (click)="forgotPassword()"
+        >
+          فراموشی کلمه عبور
+        </button>
+      </div>
     </form>
 
-    <!-- مرحله ۲: کد پیامک -->
-    <form
-      *ngIf="step === 'otp'"
-      [formGroup]="otpForm"
-      (ngSubmit)="verifyOtp()"
-      novalidate
-    >
+    <!-- مرحله ۲: کد پیامک (۴ رقم؛ بعد از رقم چهارم خودکار بررسی می‌شود) -->
+    <form *ngIf="step === 'otp'" novalidate (submit)="$event.preventDefault()">
       <h2 id="login-title">کد تایید</h2>
       <p class="hint">
-        کد ۵ رقمی ارسال‌شده به
+        کد ۴ رقمی ارسال‌شده به
         <b dir="ltr">{{ mobileForm.controls.mobile.value }}</b> را وارد کنید.
       </p>
-      <label for="code">کد پیامک</label>
-      <input
-        id="code"
-        class="otp"
-        type="text"
-        inputmode="numeric"
-        dir="ltr"
-        autocomplete="one-time-code"
-        formControlName="code"
-        (input)="normalize(otpForm.controls.code, $event)"
-      />
+      <label>کد پیامک</label>
+      <div class="otp-holder" dir="ltr">
+        <ng-otp-input
+          *ngFor="let k of [otpKey]"
+          (onInputChange)="onOtpChange($event)"
+          [config]="otpConfig"
+        ></ng-otp-input>
+      </div>
       <small class="err" *ngIf="error">{{ error }}</small>
-      <button class="bp-btn" type="submit" [disabled]="loading">
-        {{ loading ? "در حال بررسی…" : "تایید کد" }}
-      </button>
+      <small class="hint" *ngIf="loading">در حال بررسی…</small>
       <div class="row">
         <button type="button" class="link" (click)="editMobile()">
           ویرایش شماره
@@ -117,6 +121,65 @@
           class="link"
           [disabled]="countdown > 0"
           (click)="resend()"
+        >
+          {{ countdown > 0 ? "ارسال مجدد تا " + timerText : "ارسال مجدد کد" }}
+        </button>
+      </div>
+    </form>
+
+    <!-- فراموشی رمز: کد تایید + رمز جدید -->
+    <form
+      *ngIf="step === 'reset'"
+      [formGroup]="resetForm"
+      (ngSubmit)="changePassword()"
+      novalidate
+    >
+      <h2 id="login-title">تغییر رمز عبور</h2>
+      <p class="hint">
+        کد ۴ رقمی ارسال‌شده به
+        <b dir="ltr">{{ mobileForm.controls.mobile.value }}</b> و رمز عبور جدید
+        را وارد کنید.
+      </p>
+      <label>کد پیامک</label>
+      <div class="otp-holder" dir="ltr">
+        <ng-otp-input
+          *ngFor="let k of [otpKey]"
+          (onInputChange)="onResetOtpChange($event)"
+          [config]="otpConfig"
+        ></ng-otp-input>
+      </div>
+      <label for="newPassword">رمز عبور جدید</label>
+      <input
+        id="newPassword"
+        type="password"
+        dir="ltr"
+        formControlName="password"
+        autocomplete="new-password"
+        (input)="normalize(resetForm.controls.password, $event)"
+      />
+      <small
+        class="err"
+        *ngIf="
+          resetForm.touched &&
+          (resetForm.controls.code.invalid ||
+            resetForm.controls.password.invalid)
+        "
+      >
+        کد ۴ رقمی و رمز عبور جدید را کامل وارد کنید.
+      </small>
+      <small class="err" *ngIf="error">{{ error }}</small>
+      <button class="bp-btn" type="submit" [disabled]="loading">
+        {{ loading ? "در حال ارسال…" : "تغییر رمز عبور" }}
+      </button>
+      <div class="row">
+        <button type="button" class="link" (click)="backToLogin()">
+          بازگشت به ورود
+        </button>
+        <button
+          type="button"
+          class="link"
+          [disabled]="countdown > 0 || loading"
+          (click)="forgotPassword()"
         >
           {{ countdown > 0 ? "ارسال مجدد تا " + timerText : "ارسال مجدد کد" }}
         </button>

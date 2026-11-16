@@ -63,6 +63,24 @@ export class AuthService {
     });
   }
 
+  forgotPassword(mobile: string): Observable<any> {
+    return this.http.post<any>(`${API.baseUrl}/Profile/ForgotPassword`, {
+      ProfileMobileNo: mobile,
+    });
+  }
+
+  changePassword(
+    mobile: string,
+    code: string,
+    password: string,
+  ): Observable<any> {
+    return this.http.post<any>(`${API.baseUrl}/Profile/ChangePassword`, {
+      ProfileMobileNo: mobile,
+      ConfirmCode: code,
+      Password: password,
+    });
+  }
+
   /** مرحله ۲: بررسی کد پیامک؛ اگر کاربر جدید بود isNewUser=true */
   verifyOtp(mobile: string, code: string): Observable<VerifyResult> {
     if (API.useMock) {

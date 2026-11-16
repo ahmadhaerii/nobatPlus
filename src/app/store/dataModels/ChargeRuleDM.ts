@@ -40,6 +40,8 @@ export class PaymentResultDM extends Datamodel {
   @JsonProperty("UserQueueNumber", String, true) userQueueNumber = "";
   @JsonProperty("ServiceRoleDateTime", String, true) serviceRoleDateTime = "";
   @JsonProperty("MobileNo", String, true) mobileNo = "";
+  @JsonProperty("RedirectUrl", String, true) redirectUrl = "";
+  @JsonProperty("Token", String, true) token = "";
   @JsonProperty("Amount", Number, true) amount = 0;
   @JsonProperty("Items", [PaymentResultItemDM], true)
   items: PaymentResultItemDM[] = [];

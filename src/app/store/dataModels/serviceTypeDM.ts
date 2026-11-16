@@ -6,4 +6,5 @@ export default class ServiceTypeDM extends Datamodel {
   @JsonProperty("ServiceTypeID", String, true) override id = "";
   @JsonProperty("ServiceTypeID", String, true) serviceTypeId = "";
   @JsonProperty("ServiceTitle", String, true) serviceTitle: string = "";
+  @JsonProperty("Amount", Number, true) amount = 0;
 }

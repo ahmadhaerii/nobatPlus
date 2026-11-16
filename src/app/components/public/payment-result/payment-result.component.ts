@@ -14,12 +14,12 @@ export class PaymentResultComponent implements OnInit {
   paymentResult: PaymentResultDM = {} as PaymentResultDM;
   loading: boolean = false;
   status:
-    | "Success"
+    | "success"
     | "failed"
     | "not_found"
     | "duplicate"
     | "verify_failed"
-    | "Exception" = "Success";
+    | "exception" = "success";
   constructor(
     private route: ActivatedRoute,
     private chargeRuleApiService: ChargeRuleApiService,
@@ -34,14 +34,15 @@ export class PaymentResultComponent implements OnInit {
       try {
         this.paymentResult = JSON.parse(result);
       } catch (e) {}
-      this.status = status;
+      this.status = status.toString()?.toLowerCase();
     });
-    // await this.getPaymentResult();
+
+    await this.getPaymentResult();
   }
 
   async getPaymentResult() {
     switch (this.status) {
-      case "Success":
+      case "success":
         try {
           this.loading = true;
           const result: any = await this.chargeRuleApiService.getPaymentResult(
@@ -66,7 +67,7 @@ export class PaymentResultComponent implements OnInit {
       case "verify_failed":
         this.errorMessage = "تاییدیه پرداخت از سوی بانک صادر نشد";
         break;
-      case "Exception":
+      case "exception":
         this.errorMessage =
           "خطای سرور در پردازش پرداخت لطفا مجدد امتحان فرمایید";
         break;

@@ -13,6 +13,7 @@ import { CapacityListComponent } from "./components/admin/capacity-list/capacity
 import { RegisterCrossingComponent } from "./components/admin/register-crossing/register-crossing.component";
 import { PaymentResultComponent } from "./components/public/payment-result/payment-result.component";
 import { QueueListComponent } from "./components/admin/queue-list/queue-list.component";
+import { PaymentGatewayRedirectorComponent } from "./components/public/payment-gateway-redirector/payment-gateway-redirector.component";
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
         path: "",
         component: HomeComponent,
         title: "Free Zone Plus",
+      },
+      {
+        path: Links.paymentRedirect.name,
+        component: PaymentGatewayRedirectorComponent,
       },
       {
         path: Links.help.name,

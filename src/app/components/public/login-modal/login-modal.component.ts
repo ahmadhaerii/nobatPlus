@@ -9,7 +9,7 @@ import {
   toEnglishDigits,
 } from "../../../utils/validators";
 
-type Step = "mobile" | "otp" | "profile" | "login";
+type Step = "mobile" | "otp" | "profile" | "login" | "reset";
 
 @Component({
   selector: "bp-login-modal",
@@ -20,7 +20,20 @@ export class LoginModalComponent implements OnDestroy {
   step: Step = "mobile";
   loading = false;
   error = "";
+  info = "";
   countdown = 0;
+
+  /** تنظیمات باکس‌های کد تایید (۴ رقم) */
+  readonly otpLength = 4;
+  readonly otpConfig = {
+    length: 4,
+    allowNumbersOnly: true,
+    inputClass: "otp-box",
+    containerClass: "otp-wrap",
+    placeholder: "",
+  };
+  /** با تغییر این عدد، باکس‌های کد دوباره ساخته و خالی می‌شوند */
+  otpKey = 0;
 
   private token = "";
   private timerSub?: Subscription;
@@ -38,7 +51,11 @@ export class LoginModalComponent implements OnDestroy {
     password: ["", [Validators.required]],
   });
   otpForm = this.fb.nonNullable.group({
-    code: ["", [Validators.required]],
+    code: ["", [Validators.required, Validators.minLength(4)]],
+  });
+  resetForm = this.fb.nonNullable.group({
+    code: ["", [Validators.required, Validators.minLength(4)]],
+    password: ["", [Validators.required]],
   });
   profileForm = this.fb.nonNullable.group({
     firstName: ["", [Validators.required, Validators.minLength(2)]],
@@ -69,10 +86,12 @@ export class LoginModalComponent implements OnDestroy {
     }
     this.loading = true;
     this.error = "";
+    this.info = "";
     this.auth.sendOtp(this.mobile).subscribe({
       next: (result: any) => {
         this.loading = false;
         this.step = result.Profile.Registered ? "login" : "otp";
+        this.otpKey++;
         this.startTimer();
       },
       error: () => {
@@ -117,6 +136,81 @@ export class LoginModalComponent implements OnDestroy {
       });
   }
 
+  /** هر بار که کاربر یکی از ۴ باکس را پر می‌کند؛ با رقم چهارم خودکار API صدا زده می‌شود */
+  onOtpChange(value: string): void {
+    const code = toEnglishDigits(value ?? "");
+    this.otpForm.controls.code.setValue(code);
+    this.error = "";
+    if (code.length === this.otpLength && !this.loading) {
+      this.verifyOtp();
+    }
+  }
+
+  onResetOtpChange(value: string): void {
+    this.resetForm.controls.code.setValue(toEnglishDigits(value ?? ""));
+    this.error = "";
+  }
+
+  /** فراموشی رمز - مرحله ۱: ارسال کد تایید */
+  forgotPassword(): void {
+    this.loading = true;
+    this.error = "";
+    this.info = "";
+    this.auth.forgotPassword(this.mobile).subscribe({
+      next: () => {
+        this.loading = false;
+        this.resetForm.reset();
+        this.otpKey++;
+        this.step = "reset";
+        this.startTimer();
+      },
+      error: () => {
+        this.loading = false;
+        this.error = "ارسال کد تایید ناموفق بود. دوباره تلاش کنید.";
+      },
+    });
+  }
+
+  /** فراموشی رمز - مرحله ۲: تغییر رمز عبور */
+  changePassword(): void {
+    if (this.resetForm.invalid) {
+      this.resetForm.markAllAsTouched();
+      return;
+    }
+    this.loading = true;
+    this.error = "";
+    const v = this.resetForm.getRawValue();
+    this.auth
+      .changePassword(this.mobile, v.code, v.password.trim())
+      .subscribe({
+        next: (result: any) => {
+          this.loading = false;
+          const code = result?.Error?.ErrorCode;
+          if (code !== undefined && code !== 0) {
+            this.error =
+              result?.Error?.ErrorText_Fa || "تغییر رمز عبور انجام نشد.";
+            return;
+          }
+          this.resetForm.reset();
+          this.loginForm.reset();
+          this.stopTimer();
+          this.info = "رمز عبور با موفقیت تغییر کرد. وارد شوید.";
+          this.step = "login";
+        },
+        error: () => {
+          this.loading = false;
+          this.error = "کد وارد شده یا رمز عبور صحیح نیست.";
+        },
+      });
+  }
+
+  backToLogin(): void {
+    this.step = "login";
+    this.error = "";
+    this.info = "";
+    this.stopTimer();
+  }
+
   verifyOtp(): void {
     if (this.otpForm.invalid) {
       this.otpForm.markAllAsTouched();
@@ -140,6 +234,8 @@ export class LoginModalComponent implements OnDestroy {
         error: () => {
           this.loading = false;
           this.error = "کد وارد شده صحیح نیست.";
+          this.otpForm.reset();
+          this.otpKey++; // خالی کردن باکس‌ها برای تلاش دوباره
         },
       });
   }
@@ -175,7 +271,9 @@ export class LoginModalComponent implements OnDestroy {
   editMobile(): void {
     this.step = "mobile";
     this.error = "";
+    this.info = "";
     this.otpForm.reset();
+    this.resetForm.reset();
     this.stopTimer();
   }
 
@@ -197,10 +295,13 @@ export class LoginModalComponent implements OnDestroy {
   private reset(): void {
     this.step = "mobile";
     this.error = "";
+    this.info = "";
     this.loading = false;
     this.token = "";
     this.mobileForm.reset();
+    this.loginForm.reset();
     this.otpForm.reset();
+    this.resetForm.reset();
     this.profileForm.reset();
     this.stopTimer();
   }

@@ -46,6 +46,7 @@ import { QueueListByHourDialogComponent } from "./components/dialog/queue-list-b
 import { AddManualQueueTcDialogComponent } from "./components/dialog/add-manual-queue-tc-dialog/add-manual-queue-tc-dialog.component";
 import { PaymentResultComponent } from "./components/public/payment-result/payment-result.component";
 import { QueueListComponent } from "./components/admin/queue-list/queue-list.component";
+import { PaymentGatewayRedirectorComponent } from "./components/public/payment-gateway-redirector/payment-gateway-redirector.component";
 export let AppInjector: Injector;
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ export let AppInjector: Injector;
     QueueListByHourDialogComponent,
     AddManualQueueTcDialogComponent,
     PaymentResultComponent,
+    PaymentGatewayRedirectorComponent,
     QueueListComponent,
 
     FilterTableDirective,

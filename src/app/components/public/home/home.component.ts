@@ -26,7 +26,8 @@ export class HomeComponent implements OnInit {
     } catch (error) {}
   }
 
-  open(route: string): void {
-    this.router.navigate([route]);
+  open(service: ServiceTypeDM): void {
+    localStorage.setItem("amount", "" + service.amount);
+    this.router.navigate(["slots/" + service.id]);
   }
 }

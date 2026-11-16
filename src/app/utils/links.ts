@@ -1,5 +1,6 @@
 enum routeNames {
   adminTurnInquiry = "turnInquiry",
+  paymentRedirect = "payment-gateway-redirect",
   capacityList = "capacity-list",
   queueList = "queue-list",
   capacityManagement = "capacity-management",
@@ -57,6 +58,7 @@ export enum routeLinks {
     "/" +
     routeNames.registerCrossing,
   slots = "/" + routeNames.slots,
+  paymentRedirect = "/" + routeNames.paymentRedirect,
   timeSelect = "/" + routeNames.timeSelect,
   userLogin = "/" + routeNames.userLogin,
 
@@ -70,6 +72,10 @@ export const Links = {
   adminTurnInquiry: {
     name: routeNames.adminTurnInquiry,
     route: routeLinks.adminTurnInquiry,
+  },
+  paymentRedirect: {
+    name: routeNames.paymentRedirect,
+    route: routeLinks.paymentRedirect,
   },
   capacityList: {
     name: routeNames.capacityList,
