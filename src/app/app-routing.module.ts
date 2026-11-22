@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./components/public/home/home.component";
 import { HelpComponent } from "./components/public/help/help.component";
+import { MyServicesComponent } from "./components/public/my-services/my-services.component";
 import { LoginComponent } from "./components/admin/login/login.component";
 import { SlotsComponent } from "./components/public/slots/slots.component";
 import { UserAuthGuard } from "./guards/user-auth.guard";
@@ -13,7 +14,6 @@ import { CapacityListComponent } from "./components/admin/capacity-list/capacity
 import { RegisterCrossingComponent } from "./components/admin/register-crossing/register-crossing.component";
 import { PaymentResultComponent } from "./components/public/payment-result/payment-result.component";
 import { QueueListComponent } from "./components/admin/queue-list/queue-list.component";
-import { PaymentGatewayRedirectorComponent } from "./components/public/payment-gateway-redirector/payment-gateway-redirector.component";
 
 const routes: Routes = [
   {
@@ -47,12 +47,13 @@ const routes: Routes = [
         title: "Free Zone Plus",
       },
       {
-        path: Links.paymentRedirect.name,
-        component: PaymentGatewayRedirectorComponent,
-      },
-      {
         path: Links.help.name,
         component: HelpComponent,
+        title: "Free Zone Plus",
+      },
+      {
+        path: Links.myServices.name,
+        component: MyServicesComponent,
         title: "Free Zone Plus",
       },
       {

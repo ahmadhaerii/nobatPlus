@@ -12,6 +12,7 @@ enum routeNames {
   lastAddedQueueList = "last-added-queue-list",
   login = "login",
   manualQueueList = "manual-queue-list",
+  myServices = "my-services",
   queueListByDate = "queue-list-by-date",
   registerCrossing = "register-crossing",
   slots = "slots",
@@ -49,6 +50,7 @@ export enum routeLinks {
     routeNames.dashboard +
     "/" +
     routeNames.manualQueueList,
+  myServices = "/" + routeNames.myServices,
   queueListByDate = "/" +
     routeNames.dashboard +
     "/" +
@@ -73,6 +75,7 @@ export const Links = {
     name: routeNames.adminTurnInquiry,
     route: routeLinks.adminTurnInquiry,
   },
+
   paymentRedirect: {
     name: routeNames.paymentRedirect,
     route: routeLinks.paymentRedirect,
@@ -114,6 +117,10 @@ export const Links = {
   manualQueueList: {
     name: routeNames.manualQueueList,
     route: routeLinks.manualQueueList,
+  },
+  myServices: {
+    name: routeNames.myServices,
+    route: routeLinks.myServices,
   },
   queueListByDate: {
     name: routeNames.queueListByDate,

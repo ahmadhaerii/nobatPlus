@@ -9,6 +9,39 @@
     </p>
   </div>
 
+  <button
+    *ngIf="auth.user$ | async"
+    type="button"
+    class="my-services"
+    (click)="open('my-services')"
+  >
+    <span class="my-services__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <path
+          d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+        />
+      </svg>
+    </span>
+    <span class="my-services__text">
+      <b>خدمات من</b>
+      <small>مشاهده‌ی نوبت‌ها و خدمات دریافتی شما</small>
+    </span>
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+      <path
+        d="M15 6l-6 6 6 6"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+
   <div class="panel">
     <div class="panel__head">
       <span>خدمات منطقه آزاد ماکو</span>
@@ -19,7 +52,7 @@
         *ngFor="let service of services"
         type="button"
         class="service"
-        (click)="open(service)"
+        (click)="open('slots/' + service.serviceTypeId)"
       >
         <span class="service__icon"
           ><img

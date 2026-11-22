@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { AuthService } from "src/app/services/auth.service";
 import { ServiceTypeApiService } from "src/app/api/service-type-api.service";
 import ServiceTypeDM from "src/app/store/dataModels/serviceTypeDM";
 
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private serviceTypeApi: ServiceTypeApiService,
+    public auth: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -26,8 +28,7 @@ export class HomeComponent implements OnInit {
     } catch (error) {}
   }
 
-  open(service: ServiceTypeDM): void {
-    localStorage.setItem("amount", "" + service.amount);
-    this.router.navigate(["slots/" + service.id]);
+  open(route: string): void {
+    this.router.navigate([route]);
   }
 }
