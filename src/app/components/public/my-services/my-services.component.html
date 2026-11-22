@@ -1,0 +1,56 @@
+<section class="my">
+  <div class="hero">
+    <span class="badge" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="26" height="26">
+        <path
+          d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+        />
+      </svg>
+    </span>
+    <h1>خدمات من</h1>
+    <p>لیست خدماتی که تاکنون نوبت گرفته‌اید</p>
+  </div>
+
+  <div class="list" *ngIf="list.length; else empty">
+    <article
+      class="card"
+      *ngFor="let item of list; trackBy: trackById"
+      [class.card--off]="isCanceled(item)"
+    >
+      <span class="status" *ngIf="item.statusTitle">{{
+        item.statusTitle
+      }}</span>
+
+      <div class="row">
+        <span class="label">خدمات دریافتی</span>
+        <span class="value">{{ item.serviceTitle }}</span>
+      </div>
+      <div class="row">
+        <span class="label">شماره نوبت</span>
+        <span class="value">{{ item.userQueueNumber }}</span>
+      </div>
+      <div class="row" *ngFor="let extra of item.items">
+        <span class="label">{{ extra.title }}</span>
+        <span class="value">{{ extra.value }}</span>
+      </div>
+      <div class="row">
+        <span class="label">زمان مراجعه</span>
+        <span class="value">{{ visitTime(item) }}</span>
+      </div>
+    </article>
+  </div>
+
+  <ng-template #empty>
+    <p class="empty">
+      {{ loading ? "در حال بارگذاری..." : "هنوز خدمتی ثبت نکرده‌اید." }}
+    </p>
+  </ng-template>
+
+  <button type="button" class="back" (click)="back()">
+    بازگشت به صفحه اول
+  </button>
+</section>

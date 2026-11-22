@@ -1,0 +1,201 @@
+$page-from: #fbfbfc;
+$page-to: #e9ebee;
+$glow-green: rgba(47, 158, 79, 0.13);
+$glow-blue: rgba(59, 130, 196, 0.1);
+$dot: rgba(107, 114, 128, 0.28);
+$ring: rgba(107, 114, 128, 0.18);
+
+$text-strong: #111827;
+$text: #374151;
+$accent: #2f9e4f;
+$accent-light: #38ad59;
+$accent-dark: #2a8f46;
+$accent-shadow: rgba(47, 158, 79, 0.35);
+$icon-ring: rgba(47, 158, 79, 0.14);
+$head-from: #e3f3e8;
+$head-to: #f4faf6;
+$head-border: #cfe6d6;
+$head-text: #14532d;
+$card-border: #e5e7eb;
+$card-shadow: rgba(17, 24, 39, 0.1);
+$danger: #c0392b;
+$danger-soft: #fdecea;
+$on-accent: #fff;
+$radius: 16px;
+
+:host {
+  display: block;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 700px 420px at 88% 8%, $glow-green, transparent 70%),
+    radial-gradient(ellipse 800px 500px at 10% 90%, $glow-blue, transparent 70%),
+    linear-gradient(180deg, $page-from, $page-to);
+}
+:host::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient($dot 1.2px, transparent 1.3px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(135deg, #000, transparent 55%);
+  mask-image: linear-gradient(135deg, #000, transparent 55%);
+  pointer-events: none;
+}
+:host::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 0% 85%, transparent 259px, $ring 259px, $ring 261px, transparent 261px),
+    radial-gradient(circle at 0% 85%, transparent 169px, $ring 169px, $ring 171px, transparent 171px),
+    radial-gradient(circle at 100% 0%, transparent 309px, $ring 309px, $ring 311px, transparent 311px);
+}
+
+.my {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  color: $text-strong;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 1.8rem;
+  animation: fadeUp 0.5s ease both;
+  h1 {
+    margin: 0 0 0.5rem;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+  p {
+    margin: 0;
+    color: $text;
+    font-size: 0.95rem;
+  }
+}
+.badge {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 0.8rem;
+  border-radius: 50%;
+  color: $on-accent;
+  background: linear-gradient(180deg, $accent-light, $accent-dark);
+  box-shadow:
+    0 0 0 5px $icon-ring,
+    0 8px 18px $accent-shadow;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.card {
+  position: relative;
+  padding: 1.2rem 1.4rem 0.8rem;
+  border-radius: $radius;
+  background: #fff;
+  border: 1px solid $card-border;
+  border-inline-start: 5px solid $accent;
+  box-shadow: 0 8px 22px $card-shadow;
+  animation: fadeUp 0.5s ease both;
+  &--off {
+    border-inline-start-color: $danger;
+    .status {
+      color: $danger;
+      background: $danger-soft;
+    }
+  }
+}
+.status {
+  position: absolute;
+  top: 0.9rem;
+  inset-inline-end: 1.2rem;
+  padding: 0.15rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: $head-text;
+  background: linear-gradient(270deg, $head-from, $head-to);
+  border: 1px solid $head-border;
+}
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px dashed $card-border;
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+.label {
+  flex: 0 0 120px;
+  font-size: 0.88rem;
+  color: #6b7280;
+}
+.value {
+  flex: 1;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: $text-strong;
+  text-align: start;
+}
+.row:first-of-type {
+  padding-top: 1.4rem;
+}
+
+.empty {
+  text-align: center;
+  color: $text;
+  margin: 2rem 0;
+}
+.back {
+  display: block;
+  margin: 2rem auto 0;
+  padding: 0.55rem 1.6rem;
+  border-radius: 10px;
+  border: 1px solid $head-border;
+  background: linear-gradient(270deg, $head-from, $head-to);
+  color: $head-text;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 6px 14px $card-shadow;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .card {
+    animation: none;
+  }
+}
+@media (max-width: 600px) {
+  .my {
+    padding: 1.5rem 1rem 3rem;
+  }
+  .label {
+    flex-basis: 95px;
+  }
+}

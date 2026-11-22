@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpRequestService } from "../services/http-request.service";
 import { JsonParser } from "../utils/jsonparser";
 import QueueDM from "../store/dataModels/queueDM";
+import MyServiceDM from "../store/dataModels/myServiceDM";
 import PassengerInfoDM, {
   PassengerInfoErrorDM,
 } from "../store/dataModels/passengerInfoDM";
@@ -21,6 +22,14 @@ export class QueueApiService {
         serviceTypeId,
     );
     return JsonParser.deserializeArray(data.ServiceQueues, QueueDM);
+  }
+
+  /** خدمات (نوبت‌های) کاربر لاگین‌شده - Authorization: AccessToken */
+  public async QueueListByProfile() {
+    const data: any = await this.httpRequest.GET(
+      "/ServiceQueue/QueueListByProfile",
+    );
+    return JsonParser.deserializeArray(data?.ServiceQueues ?? [], MyServiceDM);
   }
 
   public async QueueListByHour(passingRoleHourCode: string) {
